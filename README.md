@@ -53,8 +53,8 @@ JSON结构用以描述牌桌上的状态，输入给模型
         "chips": 1500,
         "status": "ACTIVE",
         "holeCards": [
-          { "suit": "hearts", "rank": "A" },
-          { "suit": "diamonds", "rank": "K" }
+          { "suit": "HEARTS", "rank": "A" },
+          { "suit": "DIAMONDS", "rank": "K" }
         ]
       },
       {
@@ -63,8 +63,8 @@ JSON结构用以描述牌桌上的状态，输入给模型
         "chips": 2000,
         "status": "ACTIVE",
         "holeCards": [
-          { "suit": "clubs", "rank": "7" },
-          { "suit": "diamonds", "rank": "7" }
+          { "suit": "CLUBS", "rank": "7" },
+          { "suit": "DIAMONDS", "rank": "7" }
         ]
       }
     ],
@@ -80,7 +80,7 @@ JSON结构用以描述牌桌上的状态，输入给模型
     },
     "pot": 30,
     "currentRound": "PRE_FLOP",
-    "currentPlayerTurn": 0,
+    "currentPlayerTurn": "player1",
     "actions": [
       {
         "player": "player1",
