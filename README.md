@@ -68,7 +68,7 @@ JSON结构用以描述牌桌上的状态，输入给模型
         ]
       }
     ],
-    "dealer": 0,
+    "dealer": "player1",
     "communityCards": {
       "flop": [
         { "suit": "spades", "rank": "2" },
