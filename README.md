@@ -14,11 +14,27 @@ Using Texas Hold'em to compare the strength of various reasoning models
 
 ### suit
 
-    ["spades", "hearts", "diamonds", "clubs"]
+    ["SPADES", "HEARTS", "DIAMONDS", "CLUBS"]
 
 ### rank
 
     ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
+
+### status
+
+    ["ACTIVE", "FOLDED", "ALL_IN"]
+
+### position
+
+    ["DEALER", "SMALL_BLIND", "BIG_BLIND"]
+
+### round
+
+    ["PRE_FLOP", "FLOP", "TURN", "RIVER", "SHOWDOWN"]
+
+### action
+
+    ["CALL", "CHECK", "FOLD", "RAISE", "ALL_IN"]
 
 ## JSON 结构
 
