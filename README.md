@@ -24,10 +24,6 @@ Using Texas Hold'em to compare the strength of various reasoning models
 
     ["ACTIVE", "FOLDED", "ALL_IN"]
 
-### position
-
-    ["DEALER", "SMALL_BLIND", "BIG_BLIND"]
-
 ### round
 
     ["PRE_FLOP", "FLOP", "TURN", "RIVER", "SHOWDOWN"]
@@ -49,11 +45,12 @@ JSON结构用以描述牌桌上的状态，输入给模型
       "maxPlayers": 2,
       "smallBlind": 10,
       "bigBlind": 20,
-      "dealerPosition": 0 // 0 或 1，表示玩家数组中的索引
+      "pot": 30,
+      "dealer": "player1"
     },
     "players": [
       {
-        "playerId": "player1",
+        "id": "player1",
         "name": "Alice",
         "chips": 1500,
         "status": "active", // possible values: active, folded, all-in
@@ -62,10 +59,9 @@ JSON结构用以描述牌桌上的状态，输入给模型
           { "suit": "hearts", "rank": "A" },
           { "suit": "diamonds", "rank": "K" }
         ], // 仅在需要时显示
-        "position": "bigBlind" // possible values: dealer, smallBlind, bigBlind
       },
       {
-        "playerId": "player2",
+        "id": "player2",
         "name": "Bob",
         "chips": 2000,
         "status": "active",
@@ -74,7 +70,6 @@ JSON结构用以描述牌桌上的状态，输入给模型
           { "suit": "clubs", "rank": "7" },
           { "suit": "diamonds", "rank": "7" }
         ],
-        "position": "smallBlind"
       }
     ],
     "communityCards": {
