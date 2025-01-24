@@ -10,7 +10,7 @@ Using Texas Hold'em to compare the strength of various reasoning models
 2. small blind: 1, big blind: 2
 3. 一个买入为100 big blind, 即 200
 
-## 枚举
+## ENUM
 
 ### suit
 
