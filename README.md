@@ -49,7 +49,7 @@ JSON结构用以描述牌桌上的状态，输入给模型
     "players": [
       {
         "id": "player1",
-        "name": "Alice",
+        "name": "OpenAI o1-mini",
         "chips": 1500,
         "status": "ACTIVE",
         "holeCards": [
@@ -59,7 +59,7 @@ JSON结构用以描述牌桌上的状态，输入给模型
       },
       {
         "id": "player2",
-        "name": "Bob",
+        "name": "DeepSeek R1",
         "chips": 2000,
         "status": "ACTIVE",
         "holeCards": [
