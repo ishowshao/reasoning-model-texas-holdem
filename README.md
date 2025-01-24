@@ -38,7 +38,7 @@ Using Texas Hold'em to compare the strength of various reasoning models
 
 ## JSON 结构
 
-JSON结构用以描述牌桌上的状态
+JSON结构用以描述牌桌上的状态，输入给模型
 
 ```json
 {
@@ -109,3 +109,13 @@ JSON结构用以描述牌桌上的状态
 }
 ```
 
+## action
+
+action 是模型输出的结果，描述模型在当前状态下的决策
+
+```json
+{
+  "action": "CALL",
+  "amount": 20
+}
+```
