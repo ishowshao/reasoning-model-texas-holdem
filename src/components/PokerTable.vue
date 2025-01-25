@@ -1,20 +1,37 @@
 <template>
   <div class="poker-table p-2">
     <div>
-      <div class="d-flex justify-content-between">
+      <div class="d-flex">
         <div>
           <div>player 1</div>
           <div class="d-flex">
-            <PokerCard :card="deal()" />
-            <PokerCard :card="deal()" />
+            <div>
+              <div class="d-flex">
+                <PokerCard :card="deal()" />
+                <PokerCard :card="deal()" />
+              </div>
+              <div class="text-center">200</div>
+            </div>
           </div>
         </div>
-        <!-- <div>回放中</div> -->
+        <div class="flex-grow-1">
+          <div class="text-center">pot</div>
+          <div class="text-center">40</div>
+          <div class="d-flex justify-content-between">
+            <div>20</div>
+            <div>20</div>
+          </div>
+        </div>
         <div>
-          <div>player 2</div>
+          <div>player 1</div>
           <div class="d-flex">
-            <PokerCard :card="deal()" />
-            <PokerCard :card="deal()" />
+            <div>
+              <div class="d-flex">
+                <PokerCard :card="deal()" />
+                <PokerCard :card="deal()" />
+              </div>
+              <div class="text-center">200</div>
+            </div>
           </div>
         </div>
       </div>
@@ -67,7 +84,7 @@ export default {
 <style>
 .poker-table {
   width: 100vw;
-  height: 60vw;
+  height: 66vw;
   background-color: #14A076;
 }
 </style>
