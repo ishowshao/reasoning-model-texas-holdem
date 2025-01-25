@@ -157,7 +157,7 @@ action 是模型输出的结果，描述模型在当前状态下的决策
       "river": null
     },
     "pot": 18,
-    "currentRound": "TURN",
+    "currentRound": "FLOP",
     "currentPlayerTurn": "player2",
     "actions": [
       {
