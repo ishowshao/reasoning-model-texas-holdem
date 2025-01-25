@@ -34,7 +34,7 @@ Using Texas Hold'em to compare the strength of various reasoning models
 
 ## JSON 结构
 
-JSON结构用以描述牌桌上的状态，输入给模型
+JSON结构用以描述一局德州扑克从开始到当前状态的全部信息
 
 ```json
 {
