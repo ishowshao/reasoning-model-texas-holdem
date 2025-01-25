@@ -85,14 +85,12 @@ JSON结构用以描述牌桌上的状态，输入给模型
       {
         "player": "player1",
         "action": "CALL",
-        "amount": 20,
-        "timestamp": "2025-01-25T15:30:00Z"
+        "amount": 20
       },
       {
         "player": "player2",
         "action": "CHECK",
-        "amount": 0,
-        "timestamp": "2025-01-25T15:31:00Z"
+        "amount": 0
       }
     ]
   }
