@@ -68,6 +68,7 @@ JSON结构用以描述一局德州扑克从开始到当前状态的全部信息
         ]
       }
     ],
+    "whoAmI": "player1",
     "dealer": "player1",
     "communityCards": {
       "flop": [
@@ -143,6 +144,7 @@ action 是模型输出的结果，描述模型在当前状态下的决策
         ]
       }
     ],
+    "whoAmI": "player2",
     "dealer": "player1",
     "communityCards": {
       "flop": [
