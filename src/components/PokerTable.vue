@@ -22,18 +22,18 @@
         <div class="me-2">
           <div>Flop</div>
           <div class="d-flex">
-            <PokerCard :card="deal()" />
-            <PokerCard :card="deal()" />
-            <PokerCard :card="deal()" />
+            <PokerCard :card="-1" />
+            <PokerCard :card="-1" />
+            <PokerCard :card="-1" />
           </div>
         </div>
         <div class="me-2">
           <div>Turn</div>
-          <PokerCard :card="deal()" />
+          <PokerCard :card="-1" />
         </div>
         <div>
           <div>River</div>
-          <PokerCard :card="deal()" />
+          <PokerCard :card="-1" />
         </div>
       </div>
       <div class="text-center my-2">

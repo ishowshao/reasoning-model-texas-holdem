@@ -1,18 +1,13 @@
 <template>
-  <div class="card" :class="{'red-card': isRedSuit, 'black-card': !isRedSuit}">
-    <div class="card-suit">{{ suitsMap[suit] }}</div>
-    <div class="card-rank">{{ rank }}</div>
+  <div class="poker-card" :class="cardClass">
+    <div v-if="card !== -1">
+      <div class="poker-card-suit">{{ suitsMap[suit] }}</div>
+      <div class="poker-card-rank">{{ rank }}</div>
+    </div>
   </div>
 </template>
 
 <script>
-// 使用0-51代表52张牌
-// 花色顺序是 ♠ ♥ ♣ ♦
-// 牌面顺序是 A 2 3 4 5 6 7 8 9 T J Q K
-// 0-12 即 ♠A ♠2 ♠3 ♠4 ♠5 ♠6 ♠7 ♠8 ♠9 ♠T ♠J ♠Q ♠K
-// 13-25 即 ♥A ♥2 ♥3 ♥4 ♥5 ♥6 ♥7 ♥8 ♥9 ♥T ♥J ♥Q ♥K
-// 26-38 即 ♣A ♣2 ♣3 ♣4 ♣5 ♣6 ♣7 ♣8 ♣9 ♣T ♣J ♣Q ♣K
-// 39-51 即 ♦A ♦2 ♦3 ♦4 ♦5 ♦6 ♦7 ♦8 ♦9 ♦T ♦J ♦Q ♦K
 const suitsMap = ['♠', '♥', '♣', '♦'];
 const ranksMap = ['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'];
 
@@ -34,6 +29,12 @@ export default {
     isRedSuit() {
       return this.suit === 1 || this.suit === 3;
     },
+    cardClass() {
+      if (this.card === -1) {
+        return 'poker-card-back';
+      }
+      return this.isRedSuit ? 'poker-card-red' : 'poker-card-black';
+    },
   },
   data() {
     return {
@@ -44,17 +45,19 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  border: 1px solid #888888;
+.poker-card {
+  /* border: 1px solid #888888; */
+  background-color: white;
   border-radius: 8px;
   width: 50px;
   height: 75px;
   position: relative;
   padding: 10px;
   font-size: 20px;
+  margin: 1px;
 }
 
-.card-rank {
+.poker-card-rank {
   font-weight: bold;
   font-size: 30px;
   position: absolute;
@@ -63,18 +66,25 @@ export default {
   font-family: monospace;
 }
 
-.card-suit {
+.poker-card-suit {
   font-size: 20px;
   position: absolute;
   top: 5px;
   left: 5px;
 }
 
-.red-card {
+.poker-card-red {
   color: red;
 }
 
-.black-card {
+.poker-card-black {
   color: black;
+}
+
+.poker-card-back {
+  background-image: url('@/assets/pokerback.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 </style>
