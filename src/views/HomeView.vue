@@ -28,13 +28,11 @@
 </template>
 
 <script>
-import PokerCard from '../components/PokerCard.vue';
 import PokerTable from '../components/PokerTable.vue';
 import Actions from '../components/Actions.vue';
 
 export default {
   components: {
-    PokerCard,
     PokerTable,
     Actions,
   },

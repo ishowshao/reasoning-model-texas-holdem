@@ -5,16 +5,16 @@
         <div>
           <div>player 1</div>
           <div class="d-flex">
-            <PokerCard :card="{ suit: 'spades', rank: 'A' }" />
-            <PokerCard :card="{ suit: 'spades', rank: 'A' }" />
+            <PokerCard :card="deal()" />
+            <PokerCard :card="deal()" />
           </div>
         </div>
         <!-- <div>回放中</div> -->
         <div>
           <div>player 2</div>
           <div class="d-flex">
-            <PokerCard :card="{ suit: 'spades', rank: 'A' }" />
-            <PokerCard :card="{ suit: 'spades', rank: 'A' }" />
+            <PokerCard :card="deal()" />
+            <PokerCard :card="deal()" />
           </div>
         </div>
       </div>
@@ -22,18 +22,18 @@
         <div class="me-2">
           <div>Flop</div>
           <div class="d-flex">
-            <PokerCard :card="{ suit: 'hearts', rank: '2' }" />
-            <PokerCard :card="{ suit: 'diamonds', rank: '7' }" />
-            <PokerCard :card="{ suit: 'clubs', rank: '10' }" />
+            <PokerCard :card="deal()" />
+            <PokerCard :card="deal()" />
+            <PokerCard :card="deal()" />
           </div>
         </div>
         <div class="me-2">
           <div>Turn</div>
-          <PokerCard :card="{ suit: 'spades', rank: 'J' }" />
+          <PokerCard :card="deal()" />
         </div>
         <div>
           <div>River</div>
-          <PokerCard :card="{ suit: 'hearts', rank: 'K' }" />
+          <PokerCard :card="deal()" />
         </div>
       </div>
       <div class="text-center my-2">
@@ -44,10 +44,23 @@
 </template>
 <script>
 import PokerCard from './PokerCard.vue';
+import pokerDeck from '../lib/PokerDeck';
 
 export default {
   components: {
     PokerCard,
+  },
+  data() {
+    return {
+    };
+  },
+  methods: {
+    deal() {
+      return pokerDeck.dealCards(1)[0];
+    },
+    dealCards(n) {
+      return pokerDeck.dealCards(n);
+    },
   },
 };
 </script>

@@ -1,38 +1,44 @@
 <template>
   <div class="card" :class="{'red-card': isRedSuit, 'black-card': !isRedSuit}">
-    <div class="card-suit">{{ suitsMap[card.suit] }}</div>
-    <div class="card-rank">{{ card.rank }}</div>
+    <div class="card-suit">{{ suitsMap[suit] }}</div>
+    <div class="card-rank">{{ rank }}</div>
   </div>
 </template>
 
 <script>
-const suitsMap = {
-  'hearts': '♥',
-  'diamonds': '♦',
-  'clubs': '♣',
-  'spades': '♠',
-};
+// 使用0-51代表52张牌
+// 花色顺序是 ♠ ♥ ♣ ♦
+// 牌面顺序是 A 2 3 4 5 6 7 8 9 T J Q K
+// 0-12 即 ♠A ♠2 ♠3 ♠4 ♠5 ♠6 ♠7 ♠8 ♠9 ♠T ♠J ♠Q ♠K
+// 13-25 即 ♥A ♥2 ♥3 ♥4 ♥5 ♥6 ♥7 ♥8 ♥9 ♥T ♥J ♥Q ♥K
+// 26-38 即 ♣A ♣2 ♣3 ♣4 ♣5 ♣6 ♣7 ♣8 ♣9 ♣T ♣J ♣Q ♣K
+// 39-51 即 ♦A ♦2 ♦3 ♦4 ♦5 ♦6 ♦7 ♦8 ♦9 ♦T ♦J ♦Q ♦K
+const suitsMap = ['♠', '♥', '♣', '♦'];
+const ranksMap = ['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'];
 
 export default {
   name: 'PokerCard',
   props: {
     card: {
-      type: Object,
+      type: Number,
       required: true,
-      validator: function (value) {
-        return ['hearts', 'diamonds', 'clubs', 'spades'].includes(value.suit) && ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'].includes(value.rank);
-      },
+    },
+  },
+  computed: {
+    suit() {
+      return Math.floor(this.card / 13);
+    },
+    rank() {
+      return ranksMap[this.card % 13];
+    },
+    isRedSuit() {
+      return this.suit === 1 || this.suit === 3;
     },
   },
   data() {
     return {
       suitsMap,
     };
-  },
-  computed: {
-    isRedSuit() {
-      return this.card.suit === 'hearts' || this.card.suit === 'diamonds';
-    },
   },
 };
 </script>
