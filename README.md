@@ -41,42 +41,32 @@ JSON结构用以描述一局德州扑克从开始到当前状态的全部信息
   "game": {
     "id": "123456789",
     "table": {
-      "id": "table_01",
       "players": 2,
-      "smallBlind": 10,
-      "bigBlind": 20
+      "smallBlind": 1,
+      "bigBlind": 2
     },
     "players": [
       {
         "id": "player1",
         "name": "OpenAI o1-mini",
-        "chips": 1500,
+        "chips": 150,
+        "chipsThisRound": 50,
         "status": "ACTIVE",
-        "holeCards": [
-          { "suit": "HEARTS", "rank": "A" },
-          { "suit": "DIAMONDS", "rank": "K" }
-        ]
+        "holeCards": [0, 1]
       },
       {
         "id": "player2",
         "name": "DeepSeek R1",
-        "chips": 2000,
+        "chips": 200,
+        "chipsThisRound": 0,
         "status": "ACTIVE",
-        "holeCards": [
-          { "suit": "CLUBS", "rank": "7" },
-          { "suit": "DIAMONDS", "rank": "7" }
-        ]
+        "holeCards": [2, 3]
       }
     ],
-    "whoAmI": "player1",
     "dealer": "player1",
     "communityCards": {
-      "flop": [
-        { "suit": "SPADES", "rank": "2" },
-        { "suit": "HEARTS", "rank": "9" },
-        { "suit": "CLUBS", "rank": "J" }
-      ],
-      "turn": { "suit": "DIAMONDS", "rank": "5" },
+      "flop": [4, 5, 6],
+      "turn": 7,
       "river": null
     },
     "pot": 30,
