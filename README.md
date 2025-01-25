@@ -85,12 +85,14 @@ JSON结构用以描述一局德州扑克从开始到当前状态的全部信息
       {
         "player": "player1",
         "action": "CALL",
-        "amount": 20
+        "amount": 20,
+        "message": "I call"
       },
       {
         "player": "player2",
         "action": "CHECK",
-        "amount": 0
+        "amount": 0,
+        "message": "I check"
       }
     ]
   }
@@ -104,6 +106,7 @@ action 是模型输出的结果，描述模型在当前状态下的决策
 ```json
 {
   "action": "CALL",
-  "amount": 20
+  "amount": 20,
+  "message": "I call"
 }
 ```
