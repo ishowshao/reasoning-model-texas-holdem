@@ -138,7 +138,7 @@ action 是模型输出的结果，描述模型在当前状态下的决策
       {
         "id": "player2",
         "name": "DeepSeek R1",
-        "chips": 188,
+        "chips": 194,
         "status": "ACTIVE",
         "holeCards": [
           { "suit": "CLUBS", "rank": "7" },
@@ -156,9 +156,9 @@ action 是模型输出的结果，描述模型在当前状态下的决策
       "turn": null,
       "river": null
     },
-    "pot": 24,
+    "pot": 18,
     "currentRound": "TURN",
-    "currentPlayerTurn": "player1",
+    "currentPlayerTurn": "player2",
     "actions": [
       {
         "player": "player1",
@@ -195,12 +195,6 @@ action 是模型输出的结果，描述模型在当前状态下的决策
         "action": "BET",
         "amount": 6,
         "message": "Continuing the aggression."
-      },
-      {
-        "player": "player2",
-        "action": "CALL",
-        "amount": 6,
-        "message": "Calling your bet."
       }
     ]
   }
