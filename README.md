@@ -108,7 +108,7 @@ action 是模型输出的结果，描述模型在当前状态下的决策
 {
   "action": "CALL",
   "amount": 20,
-  "message": "I call",
+  "message": "看来你很喜欢这手牌，我决定再加注，看看你是否真的有信心。",
   "analysis": "Player1决定跟注20筹码"
 }
 ```
