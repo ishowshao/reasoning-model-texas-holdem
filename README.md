@@ -107,6 +107,102 @@ action 是模型输出的结果，描述模型在当前状态下的决策
 {
   "action": "CALL",
   "amount": 20,
-  "message": "I call"
+  "message": "I call",
+  "analysis": "Player1决定跟注20筹码"
+}
+```
+
+## Mock data
+
+```json
+{
+  "game": {
+    "id": "987654321",
+    "table": {
+      "id": "table_01",
+      "players": 2,
+      "smallBlind": 1,
+      "bigBlind": 2
+    },
+    "players": [
+      {
+        "id": "player1",
+        "name": "OpenAI o1-mini",
+        "chips": 188,
+        "status": "ACTIVE",
+        "holeCards": [
+          { "suit": "HEARTS", "rank": "A" },
+          { "suit": "DIAMONDS", "rank": "K" }
+        ]
+      },
+      {
+        "id": "player2",
+        "name": "DeepSeek R1",
+        "chips": 188,
+        "status": "ACTIVE",
+        "holeCards": [
+          { "suit": "CLUBS", "rank": "7" },
+          { "suit": "DIAMONDS", "rank": "7" }
+        ]
+      }
+    ],
+    "dealer": "player1",
+    "communityCards": {
+      "flop": [
+        { "suit": "SPADES", "rank": "2" },
+        { "suit": "HEARTS", "rank": "9" },
+        { "suit": "CLUBS", "rank": "J" }
+      ],
+      "turn": null,
+      "river": null
+    },
+    "pot": 24,
+    "currentRound": "TURN",
+    "currentPlayerTurn": "player1",
+    "actions": [
+      {
+        "player": "player1",
+        "action": "POST_SMALL_BLIND",
+        "amount": 1,
+        "message": "Posting small blind."
+      },
+      {
+        "player": "player2",
+        "action": "POST_BIG_BLIND",
+        "amount": 2,
+        "message": "Posting big blind."
+      },
+      {
+        "player": "player1",
+        "action": "RAISE",
+        "amount": 5,
+        "message": "Raising to 6."
+      },
+      {
+        "player": "player2",
+        "action": "CALL",
+        "amount": 4,
+        "message": "Calling your raise."
+      },
+      {
+        "player": "player2",
+        "action": "CHECK",
+        "amount": 0,
+        "message": "Checking on the flop."
+      },
+      {
+        "player": "player1",
+        "action": "BET",
+        "amount": 6,
+        "message": "Continuing the aggression."
+      },
+      {
+        "player": "player2",
+        "action": "CALL",
+        "amount": 6,
+        "message": "Calling your bet."
+      }
+    ]
+  }
 }
 ```
