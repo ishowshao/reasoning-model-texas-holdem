@@ -30,7 +30,7 @@ Using Texas Hold'em to compare the strength of various reasoning models
 
 ### action
 
-    ["CALL", "CHECK", "FOLD", "RAISE", "ALL_IN"]
+    ["CALL", "CHECK", "FOLD", "RAISE", "BET", "ALL_IN"]
 
 ## JSON 结构
 
@@ -130,10 +130,7 @@ action 是模型输出的结果，描述模型在当前状态下的决策
         "name": "OpenAI o1-mini",
         "chips": 188,
         "status": "ACTIVE",
-        "holeCards": [
-          { "suit": "HEARTS", "rank": "A" },
-          { "suit": "DIAMONDS", "rank": "K" }
-        ]
+        "holeCards": "player2不能看到player1的底牌"
       },
       {
         "id": "player2",
