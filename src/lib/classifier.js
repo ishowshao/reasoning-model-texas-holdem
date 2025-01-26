@@ -82,7 +82,7 @@ let reduceFullHouse = kind => {
     }
 
     if (triplet.length > 1) {
-        return triplet.sort((a, b) => a < b);
+        return triplet.sort((a, b) => b - a);
     } else {
         return [triplet[0], Math.max(...pair)];
     }
@@ -111,8 +111,8 @@ let reduceTwoPair = kind => {
             single.push(rank);
         }
     }
-    pair.sort((a, b) => a < b);
-    single.sort((a, b) => a < b);
+    pair.sort((a, b) => b - a);
+    single.sort((a, b) => b - a);
     reduce[0] = pair[0];
     reduce[1] = pair[1];
     reduce[2] = pair.length > 2
@@ -143,7 +143,7 @@ let reduceThreeOfAKind = kind => {
             single.push(rank);
         }
     }
-    single.sort((a, b) => a < b);
+    single.sort((a, b) => b - a);
 
     return [triplet, single[0], single[1]];
 };
@@ -169,7 +169,7 @@ let reduceOnePair = kind => {
             single.push(rank);
         }
     }
-    single.sort((a, b) => a < b);
+    single.sort((a, b) => b - a);
 
     return [pair, single[0], single[1], single[2]];
 };
@@ -218,7 +218,7 @@ class Classifier {
                 // if flush, only can be RoyalStraightFlush,StraightFlush,Flush
                 // 如果是同花,只能是同花、同花顺、皇家同花顺三种,其他要么冲突要么比同花小
                 // reduce: Flush & StraightFlush always compare biggest rank card, RoyalStraightFlush all same rank
-                let straight = checkStraight(flush[0].sort((a, b) => a > b));
+                let straight = checkStraight(flush[0].sort((a, b) => a - b));
                 if (straight === 13) {
                     pattern = 'RoyalStraightFlush';
                     reduce = [13];
@@ -228,12 +228,12 @@ class Classifier {
                 } else {
                     pattern = 'Flush';
                     // reduce = (flush[0].indexOf(0) !== -1 ? [13] : [Math.max(...flush[0])]);
-                    reduce = flush[0].map(i => i === 0 ? 13 : i).sort((a, b) => a < b).slice(0, 5); // fix bug 同花要选前5大
+                    reduce = flush[0].map(i => i === 0 ? 13 : i).sort((a, b) => b - a).slice(0, 5); // fix bug 同花要选前5大
                 }
             } else {
 
                 // 去除重复从小到大排序的array
-                let straightArray = Array.from(state.straight).sort((a, b) => a > b);
+                let straightArray = Array.from(state.straight).sort((a, b) => a - b);
 
                 let straight = checkStraight(straightArray);
 
