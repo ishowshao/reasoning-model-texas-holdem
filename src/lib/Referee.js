@@ -191,13 +191,41 @@ class Referee {
       console.log('Player not found. Waiting for player action...');
       return;
     }
+    const opponent = this.game.players.find((p) => p.id !== currentPlayerId);
 
     const action = await callModel(this.game);
-    this.game.actions.push(action);
+    
 
     player.hasActionThisRound = true;
     console.log(`Player ${currentPlayerId} performs action: ${action.action} ${action.amount} ${action.message}`);
-
+    if (action.action === 'FOLD') {
+      player.status = 'FOLDED';
+    } else if (action.action === 'CALL') {
+      const chips = opponent.chipsThisRound - player.chipsThisRound;
+      if (chips < 0) {
+        player.status = 'ALL_IN';
+        player.chips = 0;
+        player.chipsThisRound = opponent.chipsThisRound + chips;
+      } else {
+        player.chips -= chips;
+        player.chipsThisRound = opponent.chipsThisRound;
+      }
+    } else if (action.action === 'ALL_IN') {
+      player.status = 'ALL_IN';
+      player.chips = 0;
+      player.chipsThisRound += player.chips;
+    } else if (action.action === 'RAISE' || action.action === 'BET') {
+      player.chipsThisRound += action.amount;
+    } else if (action.action === 'CHECK') {
+      // 检查能不能check
+      if (player.chipsThisRound < opponent.chipsThisRound) {
+        action.action = 'FOLD';
+        action.message = '在无法CHECK的情况下CHECK，被判为FOLD';
+        player.status = 'FOLDED';
+      }
+    }
+    // action在上边的if-else中可能会被变更，因为AI给的action可能不符合规则
+    this.game.actions.push(action);
     this.game.currentPlayerTurn = this.getNextPlayer();
   }
 
