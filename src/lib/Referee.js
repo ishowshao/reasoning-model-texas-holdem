@@ -31,6 +31,7 @@ class Referee {
   advanceRound() {
     const currentRound = this.getCurrentRound();
     const nextRoundMap = {
+      START: 'PRE_FLOP',
       PRE_FLOP: 'FLOP',
       FLOP: 'TURN',
       TURN: 'RIVER',
@@ -42,6 +43,9 @@ class Referee {
     this.game.currentRound = nextRound;
 
     switch (nextRound) {
+      case 'PRE_FLOP':
+        this.dealPreflop();
+        break;
       case 'FLOP':
         this.dealFlop();
         break;
@@ -61,6 +65,14 @@ class Referee {
         console.log('Unknown round. Ending game.');
         this.game.currentRound = 'END';
     }
+  }
+
+  dealPreflop() {
+    // 发两张底牌
+    this.game.players.forEach((player) => {
+      player.holeCards = pokerDeck.dealCards(2);
+    });
+    console.log('Preflop has been dealt.');
   }
 
   dealFlop() {
@@ -122,7 +134,7 @@ class Referee {
     if (!player) return;
 
     await new Promise(resolve => setTimeout(resolve, 2000));
-    
+
     // 模拟一个动作，这里可以根据实际逻辑调整
     const action = {
       player: currentPlayerId,
