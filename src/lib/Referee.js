@@ -2,6 +2,43 @@ import pokerDeck from "./PokerDeck";
 import Classifier from "./classifier";
 import compare from "./compare";
 
+function describeActions(actions) {
+  const result = actions.map(action => {
+    let description = `${action.player} `;
+    switch (action.action) {
+      case "POST_SMALL_BLIND":
+        description += `下小盲注 ${action.amount}`;
+        break;
+      case "POST_BIG_BLIND":
+        description += `下大盲注 ${action.amount}`;
+        break;
+      case "RAISE":
+        description += `加注 ${action.amount}`;
+        break;
+      case "CALL":
+        description += `跟注 ${action.amount}`;
+        break;
+      case "CHECK":
+        description += `过牌`;
+        break;
+      case "BET":
+        description += `下注 ${action.amount}`;
+        break;
+      default:
+        description += `执行了未知操作`;
+    }
+
+    if (action.message) {
+      description += ` 并且说: ${action.message}`;
+    }
+
+    description += "。"; // Add a period at the end of each sentence
+    return description;
+  });
+
+  return result;
+}
+
 class Referee {
   constructor(gameState) {
     this.game = gameState.game;

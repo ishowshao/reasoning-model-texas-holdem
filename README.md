@@ -146,13 +146,13 @@ action 是模型输出的结果，描述模型在当前状态下的决策
         "player": "player1",
         "action": "POST_SMALL_BLIND",
         "amount": 1,
-        "message": "Posting small blind."
+        "message": ""
       },
       {
         "player": "player2",
         "action": "POST_BIG_BLIND",
         "amount": 2,
-        "message": "Posting big blind."
+        "message": ""
       },
       {
         "player": "player1",
