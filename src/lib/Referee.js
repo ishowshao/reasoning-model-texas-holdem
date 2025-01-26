@@ -16,6 +16,11 @@ class Referee {
   }
 
   isBettingRoundComplete() {
+    // 两个玩家都没发牌，是一种完成状态
+    if (this.game.players.every((player) => player.holeCards[0] === -1 && player.holeCards[1] === -1)) {
+      return true;
+    }
+
     // 简化逻辑：检查所有活跃玩家是否都有最新的行动
     const actions = this.game.actions;
     const activePlayers = this.getActivePlayers();
@@ -151,6 +156,7 @@ class Referee {
 
   async run() {
     while (this.getCurrentRound() !== 'END') {
+      console.log('Current round:', this.getCurrentRound());
       if (this.getCurrentRound() === 'SHOWDOWN') {
         this.showdown();
         this.advanceRound();
@@ -158,8 +164,10 @@ class Referee {
       }
 
       if (this.isBettingRoundComplete()) {
+        console.log('Betting round complete. Advancing to next round.');
         this.advanceRound();
       } else {
+        console.log('Waiting for player action.');
         await this.waitForPlayerAction();
       }
     }
