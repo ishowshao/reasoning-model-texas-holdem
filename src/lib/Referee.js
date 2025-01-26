@@ -225,7 +225,6 @@ class Referee {
         console.log('Betting round complete. Advancing to next round.');
         this.advanceRound();
       } else {
-        console.log('Waiting for player action.');
         await this.waitForPlayerAction();
       }
     }
