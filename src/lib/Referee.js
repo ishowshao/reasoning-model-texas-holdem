@@ -1,16 +1,10 @@
-const fs = require('fs');
+import pokerDeck from "./PokerDeck";
 
-// 假设我们有一个函数来比较牌型，返回胜者
-function determineWinner(players, communityCards) {
-  // 这里需要实现实际的牌型比较逻辑
-  // 返回赢家的player id列表
-  // 简化示例，假设 player1 获胜
-  return [players[0].id];
-}
 
 class Referee {
   constructor(gameState) {
     this.game = gameState.game;
+    pokerDeck.resetDeck();
   }
 
   getCurrentRound() {
@@ -70,21 +64,22 @@ class Referee {
   }
 
   dealFlop() {
-    // 假设 Flop 已经在 JSON 中设置，无需发牌
-    console.log('Flop has been dealt.');
+    // 发三张公共牌
+    this.game.communityCards.flop = pokerDeck.dealCards(3);
     this.game.currentPlayerTurn = this.getNextPlayer();
+    console.log('Flop has been dealt.');
   }
 
   dealTurn() {
     // 发一张转牌
-    this.game.communityCards.turn = { suit: 'HEARTS', rank: '10' };
+    this.game.communityCards.turn = pokerDeck.dealCards(1);
     console.log('Turn has been dealt.');
     this.game.currentPlayerTurn = this.getNextPlayer();
   }
 
   dealRiver() {
     // 发一张河牌
-    this.game.communityCards.river = { suit: 'SPADES', rank: 'Q' };
+    this.game.communityCards.river = pokerDeck.dealCards(1);
     console.log('River has been dealt.');
     this.game.currentPlayerTurn = this.getNextPlayer();
   }

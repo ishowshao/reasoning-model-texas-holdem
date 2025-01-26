@@ -110,7 +110,6 @@ action 是模型输出的结果，描述模型在当前状态下的决策
   "game": {
     "id": "987654321",
     "table": {
-      "id": "table_01",
       "players": 2,
       "smallBlind": 1,
       "bigBlind": 2
@@ -119,33 +118,27 @@ action 是模型输出的结果，描述模型在当前状态下的决策
       {
         "id": "player1",
         "name": "OpenAI o1-mini",
-        "chips": 188,
+        "chips": 150,
+        "chipsThisRound": 50,
         "status": "ACTIVE",
-        "holeCards": "player2不能看到player1的底牌"
+        "holeCards": [0, 1]
       },
       {
         "id": "player2",
         "name": "DeepSeek R1",
-        "chips": 194,
+        "chips": 200,
+        "chipsThisRound": 0,
         "status": "ACTIVE",
-        "holeCards": [
-          { "suit": "CLUBS", "rank": "7" },
-          { "suit": "DIAMONDS", "rank": "7" }
-        ]
+        "holeCards": [2, 3]
       }
     ],
-    "whoAmI": "player2",
     "dealer": "player1",
     "communityCards": {
-      "flop": [
-        { "suit": "SPADES", "rank": "2" },
-        { "suit": "HEARTS", "rank": "9" },
-        { "suit": "CLUBS", "rank": "J" }
-      ],
+      "flop": [4, 5, 6],
       "turn": null,
       "river": null
     },
-    "pot": 18,
+    "pot": 30,
     "currentRound": "FLOP",
     "currentPlayerTurn": "player2",
     "actions": [
