@@ -23,7 +23,7 @@
           </div>
         </div>
         <div>
-          <div>player 1</div>
+          <div>player 2</div>
           <div class="d-flex">
             <div>
               <div class="d-flex">
