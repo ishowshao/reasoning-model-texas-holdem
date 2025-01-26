@@ -17,9 +17,10 @@
           </select>
         </div>
         <div class="col-12">
-          <button type="submit" class="btn btn-primary" @click="toggleGame">
+          <button type="submit" class="btn btn-primary me-2" @click="toggleGame">
             {{ buttonLabel }}
           </button>
+          <button type="button" class="btn btn-danger" @click="stopGame">停止</button>
         </div>
       </form>
     </div>
@@ -108,6 +109,9 @@ export default {
           this.referee.pause();
         }
       }
+    },
+    stopGame() {
+      this.referee.stop();
     },
   },
 };

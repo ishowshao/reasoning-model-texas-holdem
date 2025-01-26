@@ -6,6 +6,7 @@ class Referee {
   constructor(gameState) {
     this.game = gameState.game;
     this.isPaused = false;
+    this.isStopped = false; // 添加一个标志位来表示游戏是否被强行停止
     pokerDeck.resetDeck();
   }
 
@@ -193,7 +194,7 @@ class Referee {
 
     const action = await callModel(this.game);
     this.game.actions.push(action);
-    
+
     player.hasActionThisRound = true;
     console.log(`Player ${currentPlayerId} performs action: ${action.action}`);
 
@@ -201,7 +202,7 @@ class Referee {
   }
 
   async run() {
-    while (this.getCurrentRound() !== 'END') {
+    while (this.getCurrentRound() !== 'END' && !this.isStopped) { // 添加对isStopped的检查
       if (this.isPaused) {
         console.log('Game is paused.');
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -232,6 +233,11 @@ class Referee {
   resume() {
     this.isPaused = false;
     console.log('Game resumed.');
+  }
+
+  stop() {
+    this.isStopped = true; // 设置isStopped为true，强行停止游戏
+    console.log('Game stopped.');
   }
 }
 
