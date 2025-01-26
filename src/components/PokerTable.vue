@@ -7,19 +7,19 @@
           <div class="d-flex">
             <div>
               <div class="d-flex">
-                <PokerCard :card="deal()" />
-                <PokerCard :card="deal()" />
+                <PokerCard :card="game.players[0].holeCards[0]" />
+                <PokerCard :card="game.players[0].holeCards[1]" />
               </div>
-              <div class="text-center">200</div>
+              <div class="text-center">{{ game.players[0].chips }}</div>
             </div>
           </div>
         </div>
         <div class="flex-grow-1">
           <div class="text-center">pot</div>
-          <div class="text-center">40</div>
+          <div class="text-center">{{ game.pot }}</div>
           <div class="d-flex justify-content-between">
-            <div>20</div>
-            <div>20</div>
+            <div>{{ game.players[0].chipsThisRound }}</div>
+            <div>{{ game.players[1].chipsThisRound }}</div>
           </div>
         </div>
         <div>
@@ -27,10 +27,10 @@
           <div class="d-flex">
             <div>
               <div class="d-flex">
-                <PokerCard :card="deal()" />
-                <PokerCard :card="deal()" />
+                <PokerCard :card="game.players[1].holeCards[0]" />
+                <PokerCard :card="game.players[1].holeCards[1]" />
               </div>
-              <div class="text-center">200</div>
+              <div class="text-center">{{ game.players[1].chips }}</div>
             </div>
           </div>
         </div>
@@ -39,18 +39,18 @@
         <div class="me-2">
           <div>Flop</div>
           <div class="d-flex">
-            <PokerCard :card="-1" />
-            <PokerCard :card="-1" />
-            <PokerCard :card="-1" />
+            <PokerCard :card="game.communityCards.flop[0]" />
+            <PokerCard :card="game.communityCards.flop[1]" />
+            <PokerCard :card="game.communityCards.flop[2]" />
           </div>
         </div>
         <div class="me-2">
           <div>Turn</div>
-          <PokerCard :card="-1" />
+          <PokerCard :card="game.communityCards.turn" />
         </div>
         <div>
           <div>River</div>
-          <PokerCard :card="-1" />
+          <PokerCard :card="game.communityCards.river" />
         </div>
       </div>
       <div class="text-center my-2">
@@ -64,6 +64,12 @@ import PokerCard from './PokerCard.vue';
 import pokerDeck from '../lib/PokerDeck';
 
 export default {
+  props: {
+    game: {
+      type: Object,
+      required: true,
+    },
+  },
   components: {
     PokerCard,
   },

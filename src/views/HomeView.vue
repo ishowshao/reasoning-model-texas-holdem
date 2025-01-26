@@ -22,7 +22,7 @@
       </form>
     </div>
 
-    <PokerTable />
+    <PokerTable :game="game" />
     <Actions :actions="game.actions" />
   </div>
 </template>
