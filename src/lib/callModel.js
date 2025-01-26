@@ -3,26 +3,31 @@ import describeActions from './describeActions';
 import util from './util';
 
 async function callModel(game) {
-  const data = JSON.parse(JSON.stringify(game));
-  data.actions = describeActions(data.actions);
-  data.communityCards.flop = util.air(data.communityCards.flop);
-  data.communityCards.turn = util.ir(data.communityCards.turn);
-  data.communityCards.river = util.ir(data.communityCards.river);
-  data.players.forEach((player) => {
+  const payload = JSON.parse(JSON.stringify(game));
+  payload.actions = describeActions(payload.actions);
+  payload.communityCards.flop = util.air(payload.communityCards.flop);
+  payload.communityCards.turn = util.ir(payload.communityCards.turn);
+  payload.communityCards.river = util.ir(payload.communityCards.river);
+  payload.players.forEach((player) => {
     player.holeCards = util.air(player.holeCards);
-    if (player.id !== data.currentPlayerTurn) {
+    if (player.id !== payload.currentPlayerTurn) {
       player.holeCards = [];
     }
   });
 
-  console.log(JSON.stringify(data));
-  const response = await axios.post('/api/action.php', data);
+  console.log(JSON.stringify(payload));
+  const { data } = await axios.post('/api/action.php', payload);
+  if (data.code !== 0) {
+    throw new Error(data.message);
+  }
+  const modelAction = data.data;
+
   return {
-    player: data.currentPlayerTurn,
-    action: response.data.action,
-    amount: response.data.amount,
-    message: response.data.message,
-    analysis: response.data.analysis,
+    player: payload.currentPlayerTurn,
+    action: modelAction.action,
+    amount: modelAction.amount,
+    message: modelAction.message,
+    analysis: modelAction.analysis,
   };
 }
 
