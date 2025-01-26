@@ -26,7 +26,7 @@ Using Texas Hold'em to compare the strength of various reasoning models
 
 ### round
 
-    ["PRE_FLOP", "FLOP", "TURN", "RIVER", "SHOWDOWN", "END"]
+    ["START", "PRE_FLOP", "FLOP", "TURN", "RIVER", "SHOWDOWN", "END"]
 
 ### action
 
