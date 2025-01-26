@@ -1,44 +1,7 @@
 import pokerDeck from "./PokerDeck";
 import Classifier from "./classifier";
 import compare from "./compare";
-
-function describeActions(actions) {
-  const result = actions.map(action => {
-    let description = `${action.player} `;
-    switch (action.action) {
-      case "POST_SMALL_BLIND":
-        description += `下小盲注 ${action.amount}`;
-        break;
-      case "POST_BIG_BLIND":
-        description += `下大盲注 ${action.amount}`;
-        break;
-      case "RAISE":
-        description += `加注 ${action.amount}`;
-        break;
-      case "CALL":
-        description += `跟注 ${action.amount}`;
-        break;
-      case "CHECK":
-        description += `过牌`;
-        break;
-      case "BET":
-        description += `下注 ${action.amount}`;
-        break;
-      default:
-        description += `执行了未知操作`;
-    }
-
-    if (action.message) {
-      description += ` 并且说: ${action.message}`;
-    }
-
-    description += "。"; // Add a period at the end of each sentence
-    return description;
-  });
-
-  return result;
-}
-
+import callModel from "./callModel";
 class Referee {
   constructor(gameState) {
     this.game = gameState.game;
@@ -228,15 +191,9 @@ class Referee {
       return;
     }
 
-    await new Promise(resolve => setTimeout(resolve, 200));
-
-    const action = {
-      player: currentPlayerId,
-      action: 'CHECK',
-      amount: 0,
-      message: "I'll check.",
-    };
+    const action = await callModel(this.game);
     this.game.actions.push(action);
+    
     player.hasActionThisRound = true;
     console.log(`Player ${currentPlayerId} performs action: ${action.action}`);
 
