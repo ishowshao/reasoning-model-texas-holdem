@@ -253,6 +253,32 @@ class Referee {
     }
   }
 
+  async step() {
+    if (this.getCurrentRound() === 'END' || this.isStopped) {
+      console.log('Game has ended or stopped.');
+      return;
+    }
+
+    if (this.isPaused) {
+      console.log('Game is paused.');
+      return;
+    }
+
+    console.log('Current round:', this.getCurrentRound());
+    if (this.getCurrentRound() === 'SHOWDOWN') {
+      this.showdown();
+      this.advanceRound();
+      return;
+    }
+
+    if (this.isBettingRoundComplete()) {
+      console.log('Betting round complete. Advancing to next round.');
+      this.advanceRound();
+    } else {
+      await this.waitForPlayerAction();
+    }
+  }
+
   pause() {
     this.isPaused = true;
     console.log('Game paused.');
