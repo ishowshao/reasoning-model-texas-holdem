@@ -56,7 +56,7 @@ export default {
           },
           {
             id: 'player2',
-            name: 'DeepSeek R1',
+            name: 'DeepSeek-V3',
             chips: 200,
             chipsThisRound: 0,
             status: 'ACTIVE',
