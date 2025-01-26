@@ -105,6 +105,15 @@ class Referee {
     this.game.players.forEach((player) => {
       player.holeCards = pokerDeck.dealCards(2);
     });
+    // 根据dealer下盲注，单挑时dealer是小盲
+    const dealerPlayer = this.game.players.find((player) => player.id === this.game.dealer);
+    const smallBlindPlayer = dealerPlayer;
+    const bigBlindPlayer = this.game.players.find((player) => player.id !== dealerPlayer.id);
+    smallBlindPlayer.chips -= this.game.table.smallBlind;
+    bigBlindPlayer.chips -= this.game.table.bigBlind;
+    this.game.pot += this.game.table.smallBlind + this.game.table.bigBlind;
+    smallBlindPlayer.chipsThisRound += this.game.table.smallBlind;
+    bigBlindPlayer.chipsThisRound += this.game.table.bigBlind;
     console.log('Preflop has been dealt.');
   }
 
