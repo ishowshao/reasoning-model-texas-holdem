@@ -196,7 +196,7 @@ class Referee {
     this.game.actions.push(action);
 
     player.hasActionThisRound = true;
-    console.log(`Player ${currentPlayerId} performs action: ${action.action}`);
+    console.log(`Player ${currentPlayerId} performs action: ${action.action} ${action.amount} ${action.message}`);
 
     this.game.currentPlayerTurn = this.getNextPlayer();
   }

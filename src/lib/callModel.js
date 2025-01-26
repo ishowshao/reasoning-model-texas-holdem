@@ -15,7 +15,6 @@ async function callModel(game) {
     }
   });
 
-  console.log(JSON.stringify(payload));
   const { data } = await axios.post('/api/action.php', payload);
   if (data.code !== 0) {
     throw new Error(data.message);
