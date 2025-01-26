@@ -10,15 +10,19 @@ async function callModel(game) {
   data.communityCards.river = util.ir(data.communityCards.river);
   data.players.forEach((player) => {
     player.holeCards = util.air(player.holeCards);
+    if (player.id !== data.currentPlayerTurn) {
+      player.holeCards = [];
+    }
   });
 
   console.log(JSON.stringify(data));
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  const response = await axios.post('/api/action.php', data);
   return {
     player: data.currentPlayerTurn,
-    action: 'CHECK',
-    amount: 0,
-    message: "I'll check.",
+    action: response.data.action,
+    amount: response.data.amount,
+    message: response.data.message,
+    analysis: response.data.analysis,
   };
 }
 
