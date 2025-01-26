@@ -1,4 +1,6 @@
 import pokerDeck from "./PokerDeck";
+import Classifier from "./classifier";
+import compare from "./compare";
 
 class Referee {
   constructor(gameState) {
@@ -113,13 +115,13 @@ class Referee {
   }
 
   dealTurn() {
-    this.game.communityCards.turn = pokerDeck.dealCards(1);
+    this.game.communityCards.turn = pokerDeck.dealCards(1)[0];
     console.log('Turn has been dealt.');
     this.game.currentPlayerTurn = this.getNextPlayer();
   }
 
   dealRiver() {
-    this.game.communityCards.river = pokerDeck.dealCards(1);
+    this.game.communityCards.river = pokerDeck.dealCards(1)[0];
     console.log('River has been dealt.');
     this.game.currentPlayerTurn = this.getNextPlayer();
   }
@@ -131,8 +133,8 @@ class Referee {
       this.game.pot = 0;
       console.log(`Player ${winner} wins the pot by default.`);
     } else {
-      const community = [...this.game.communityCards.flop, ...(this.game.communityCards.turn ? [this.game.communityCards.turn] : []), ...(this.game.communityCards.river ? [this.game.communityCards.river] : [])];
-      const winners = determineWinner(activePlayers, community);
+      const community = [...this.game.communityCards.flop, this.game.communityCards.turn, this.game.communityCards.river].filter((card) => card !== -1);
+      const winners = this.determineWinner(activePlayers, community);
       const pot = this.game.pot;
       const splitPot = Math.floor(pot / winners.length);
       winners.forEach((winnerId) => {
@@ -146,17 +148,41 @@ class Referee {
     }
   }
 
+  determineWinner(activePlayers, community) {
+    const p1 = new Classifier([...activePlayers[0].holeCards, ...community]);
+    const p2 = new Classifier([...activePlayers[1].holeCards, ...community]);
+    console.log(p1, p2);
+    const v1 = p1.classify();
+    const v2 = p2.classify();
+    console.log(v1, v2);
+    const compareResult = compare(v1, v2);
+    if (compareResult > 0) {
+      return [activePlayers[0].id];
+    } else if (compareResult < 0) {
+      return [activePlayers[1].id];
+    } else {
+      return [activePlayers[0].id, activePlayers[1].id];
+    }
+  }
+
   getNextPlayer() {
-    const activePlayers = this.getActivePlayers();
-    return activePlayers.length > 0 ? activePlayers[0].id : null;
+    const currentPlayerId = this.game.currentPlayerTurn;
+    const currentPlayerIndex = this.game.players.findIndex((player) => player.id === currentPlayerId);
+    const nextPlayerIndex = (currentPlayerIndex + 1) % this.game.players.length;
+    return this.game.players[nextPlayerIndex].id;
   }
 
   async waitForPlayerAction() {
+    console.log('Waiting for player action...');
     const currentPlayerId = this.game.currentPlayerTurn;
+    console.log('Current player:', currentPlayerId);
     const player = this.game.players.find((p) => p.id === currentPlayerId);
-    if (!player) return;
+    if (!player) {
+      console.log('Player not found. Waiting for player action...');
+      return;
+    }
 
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 200));
 
     const action = {
       player: currentPlayerId,
