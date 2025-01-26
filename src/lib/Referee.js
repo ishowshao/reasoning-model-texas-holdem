@@ -114,13 +114,15 @@ class Referee {
     return activePlayers.length > 0 ? activePlayers[0].id : null;
   }
 
-  waitForPlayerAction() {
+  async waitForPlayerAction() {
     // 在实际应用中，这里应该是等待玩家输入或通过 API 接收
     // 简化示例，自动进行一个模拟动作
     const currentPlayerId = this.game.currentPlayerTurn;
     const player = this.game.players.find((p) => p.id === currentPlayerId);
     if (!player) return;
 
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
     // 模拟一个动作，这里可以根据实际逻辑调整
     const action = {
       player: currentPlayerId,
@@ -135,7 +137,7 @@ class Referee {
     this.game.currentPlayerTurn = this.getNextPlayer();
   }
 
-  run() {
+  async run() {
     while (this.getCurrentRound() !== 'END') {
       if (this.getCurrentRound() === 'SHOWDOWN') {
         this.showdown();
@@ -146,7 +148,7 @@ class Referee {
       if (this.isBettingRoundComplete()) {
         this.advanceRound();
       } else {
-        this.waitForPlayerAction();
+        await this.waitForPlayerAction();
       }
     }
   }

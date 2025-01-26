@@ -17,7 +17,7 @@
           </select>
         </div>
         <div class="col-12">
-          <button type="submit" class="btn btn-primary">开始对战</button>
+          <button type="submit" class="btn btn-primary" @click="startGame">开始对战</button>
         </div>
       </form>
     </div>
@@ -123,6 +123,11 @@ export default {
     return {
       game: referee.game,
     };
+  },
+  methods: {
+    async startGame() {
+      await referee.run();
+    },
   },
 };
 </script>
