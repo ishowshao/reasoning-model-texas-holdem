@@ -32,8 +32,8 @@ class Referee {
 
     const activePlayers = this.getActivePlayers();
 
-    // 1. 如果一个玩家状态是FOLDED，则另一个玩家直接获胜
-    if (activePlayers.length === 1) {
+    // 1. 如果一个玩家状态是FOLDED，不需要继续投注
+    if (this.game.players.some((player) => player.status === 'FOLDED')) {
       return true;
     }
     // 2. 两个玩家状态都是ALL_IN
@@ -72,12 +72,10 @@ class Referee {
       SHOWDOWN: 'END',
     };
 
-    const nextRound = nextRoundMap[currentRound] || 'END';
+    let nextRound = nextRoundMap[currentRound] || 'END';
     // 如果有一个玩家FOLDED，则游戏结束
     if (this.game.players.some((player) => player.status === 'FOLDED')) {
-      this.game.currentRound = 'SHOWDOWN';
-    } else {
-      this.game.currentRound = nextRound;
+      nextRound = 'SHOWDOWN';
     }
 
     this.game.players.forEach((player) => {
@@ -268,6 +266,7 @@ class Referee {
   }
 
   async step() {
+    // debugger;
     console.log('step');
     console.log(JSON.stringify(this.game));
     if (this.getCurrentRound() === 'END' || this.isStopped) {
