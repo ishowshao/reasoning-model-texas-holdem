@@ -158,10 +158,10 @@ class Referee {
     // debugger;
     const activePlayers = this.getActivePlayers();
     if (activePlayers.length === 1) {
-      const winner = activePlayers[0].id;
+      const winner = activePlayers[0];
       winner.chips += this.game.pot;
       this.game.pot = 0;
-      console.log(`Player ${winner} wins the pot by default.`);
+      console.log(`Player ${winner.id} wins the pot by default.`);
     } else {
       const community = [...this.game.communityCards.flop, this.game.communityCards.turn, this.game.communityCards.river].filter((card) => card !== -1);
       const winners = this.determineWinner(activePlayers, community);
