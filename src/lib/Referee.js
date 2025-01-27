@@ -3,8 +3,8 @@ import Classifier from "./classifier";
 import compare from "./compare";
 import callModel from "./callModel";
 class Referee {
-  constructor(gameState) {
-    this.game = gameState.game;
+  constructor(state) {
+    this.game = state;
     this.isPaused = false;
     this.isStopped = false; // 添加一个标志位来表示游戏是否被强行停止
     pokerDeck.resetDeck();
@@ -161,6 +161,7 @@ class Referee {
       const winner = activePlayers[0];
       winner.chips += this.game.pot;
       this.game.pot = 0;
+      this.game.winner = [winner.id];
       console.log(`Player ${winner.id} wins the pot by default.`);
     } else {
       const community = [...this.game.communityCards.flop, this.game.communityCards.turn, this.game.communityCards.river].filter((card) => card !== -1);
@@ -183,6 +184,7 @@ class Referee {
       }
       
       this.game.pot = 0;
+      this.game.winner = winners;
       console.log(`Players ${winners.join(', ')} win the pot.`);
     }
   }
@@ -291,8 +293,12 @@ class Referee {
     // debugger;
     console.log('step');
     console.log(JSON.stringify(this.game));
-    if (this.getCurrentRound() === 'END' || this.isStopped) {
-      console.log('Game has ended or stopped.');
+    if (this.isStopped) {
+      console.log('Game has stopped.');
+      return;
+    }
+    if (this.getCurrentRound() === 'END') {
+      console.log('Game has ended.');
       return;
     }
 

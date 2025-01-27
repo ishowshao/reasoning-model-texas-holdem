@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
+import Referee from './Referee';
 
 class GameManager {
-  constructor(name1, name2) {
+  constructor(name1, name2, state = null) {
     this.dealerIndex = 0;
-    this.game = {
+    this.game = state || {
       id: uuidv4(),
       table: {
         players: 2,
@@ -45,6 +46,7 @@ class GameManager {
       // 最终胜利的玩家，即赢得所有筹码的玩家
       finalWinner: null,
     };
+    this.referee = new Referee(this.game);
   }
 
   next() {
@@ -57,15 +59,24 @@ class GameManager {
       player.holeCards = [-1, -1];
       player.status = 'ACTIVE';
     });
-    this.communityCards = {
+    this.game.communityCards = {
       flop: [-1, -1, -1],
       turn: -1,
       river: -1,
     };
-    this.pot = 0;
-    this.currentRound = 'START';
-    this.actions = [];
-    this.winner = [];
+    this.game.pot = 0;
+    this.game.currentRound = 'START';
+    this.game.actions = [];
+    this.game.winner = [];
+  }
+
+  step() {
+    if (this.game.winner.length > 0) {
+      this.next();
+      console.log('开始下一局');
+    } else {
+      this.referee.step();
+    }
   }
 }
 
