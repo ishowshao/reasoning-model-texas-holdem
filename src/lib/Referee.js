@@ -121,6 +121,10 @@ class Referee {
   dealFlop() {
     this.game.communityCards.flop = pokerDeck.dealCards(3);
     this.game.currentPlayerTurn = this.getNextPlayer();
+    // chipsThisRound 清零
+    this.game.players.forEach((player) => {
+      player.chipsThisRound = 0;
+    });
     console.log('Flop has been dealt.');
   }
 
@@ -204,18 +208,23 @@ class Referee {
       const chips = opponent.chipsThisRound - player.chipsThisRound;
       if (chips < 0) {
         player.status = 'ALL_IN';
+        player.chipsThisRound += player.chips;
+        this.game.pot += player.chips;
         player.chips = 0;
-        player.chipsThisRound = opponent.chipsThisRound + chips;
       } else {
         player.chips -= chips;
         player.chipsThisRound = opponent.chipsThisRound;
+        this.game.pot += chips;
       }
     } else if (action.action === 'ALL_IN') {
       player.status = 'ALL_IN';
-      player.chips = 0;
       player.chipsThisRound += player.chips;
+      this.game.pot += player.chips;
+      player.chips = 0;
     } else if (action.action === 'RAISE' || action.action === 'BET') {
       player.chipsThisRound += action.amount;
+      player.chips -= action.amount;
+      this.game.pot += action.amount;
     } else if (action.action === 'CHECK') {
       // 检查能不能check
       if (player.chipsThisRound < opponent.chipsThisRound) {
