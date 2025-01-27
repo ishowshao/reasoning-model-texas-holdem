@@ -117,7 +117,7 @@ class Referee {
     this.game.pot += this.game.table.smallBlind + this.game.table.bigBlind;
     smallBlindPlayer.chipsThisRound += this.game.table.smallBlind;
     bigBlindPlayer.chipsThisRound += this.game.table.bigBlind;
-    this.game.currentPlayerTurn = bigBlindPlayer.id;
+    this.game.currentPlayerTurn = smallBlindPlayer.id;
     console.log('Preflop has been dealt.');
   }
 
