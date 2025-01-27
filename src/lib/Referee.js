@@ -232,16 +232,16 @@ class Referee {
     if (action.action === 'FOLD') {
       player.status = 'FOLDED';
     } else if (action.action === 'CALL') {
-      const chips = opponent.chipsThisRound - player.chipsThisRound;
-      if (chips < 0) {
+      const needChips = opponent.chipsThisRound - player.chipsThisRound;
+      if (player.chips <= needChips) {
         player.status = 'ALL_IN';
         player.chipsThisRound += player.chips;
         this.game.pot += player.chips;
         player.chips = 0;
       } else {
-        player.chips -= chips;
+        player.chips -= needChips;
         player.chipsThisRound = opponent.chipsThisRound;
-        this.game.pot += chips;
+        this.game.pot += needChips;
       }
     } else if (action.action === 'ALL_IN') {
       player.status = 'ALL_IN';
@@ -249,9 +249,17 @@ class Referee {
       this.game.pot += player.chips;
       player.chips = 0;
     } else if (action.action === 'RAISE' || action.action === 'BET') {
-      player.chipsThisRound += action.amount;
-      player.chips -= action.amount;
-      this.game.pot += action.amount;
+      const chips = player.chips - action.amount;
+      if (chips <= 0) {
+        player.status = 'ALL_IN';
+        player.chipsThisRound += player.chips;
+        this.game.pot += player.chips;
+        player.chips = 0;
+      } else {
+        player.chipsThisRound += action.amount;
+        player.chips -= action.amount;
+        this.game.pot += action.amount;
+      }
     } else if (action.action === 'CHECK') {
       // 检查能不能check
       if (player.chipsThisRound < opponent.chipsThisRound) {
@@ -290,7 +298,7 @@ class Referee {
   }
 
   async step() {
-    // debugger;
+    debugger;
     console.log('step');
     console.log(JSON.stringify(this.game));
     if (this.isStopped) {
