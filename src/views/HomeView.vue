@@ -20,8 +20,9 @@
           <!-- <button type="submit" class="btn btn-primary me-2" @click="toggleGame">
             {{ buttonLabel }}
           </button> -->
-          <!-- <button type="button" class="btn btn-danger" @click="stopGame">停止</button> -->
-          <button type="button" class="btn btn-primary" @click="step">下一步</button>
+          <button type="button" class="btn btn-primary me-2" @click="step">下一步</button>
+          <button type="button" class="btn btn-primary me-2" @click="auto">自动</button>
+          <button type="button" class="btn btn-danger me-2" @click="stopGame">停止</button>
         </div>
       </form>
     </div>
@@ -77,10 +78,13 @@ export default {
       }
     },
     stopGame() {
-      // this.referee.stop();
+      this.gameManager.stop();
     },
     step() {
       this.gameManager.step();
+    },
+    auto() {
+      this.gameManager.auto();
     },
   },
 };

@@ -7,7 +7,6 @@ class Referee {
     this.game = state;
     this.isPaused = false;
     this.isStopped = false; // 添加一个标志位来表示游戏是否被强行停止
-    pokerDeck.resetDeck();
   }
 
   getDealerPlayer() {
@@ -167,7 +166,7 @@ class Referee {
       const pot = this.game.pot;
       const splitPot = Math.floor(pot / winners.length);
       if (winners.length === 1) {
-        winners[0].chips += pot;
+        this.game.players.find((player) => player.id === winners[0]).chips += pot;
       } else {
         this.game.players.forEach((player) => {
           if (winners.includes(player.id)) {
@@ -235,6 +234,7 @@ class Referee {
 
     player.hasActionThisRound = true;
     console.log(`Player ${currentPlayerId} performs action: ${action.action} ${action.amount} ${action.message}`);
+    console.log(`%c${action.action}`, 'background-color: blue;');
     if (action.action === 'FOLD') {
       player.fold();
     } else if (action.action === 'CALL') {
@@ -284,7 +284,7 @@ class Referee {
   }
 
   async step() {
-    debugger;
+    // debugger;
     console.log('step');
     console.log(JSON.stringify(this.game));
     if (this.isStopped) {

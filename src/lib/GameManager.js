@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 import Referee from './Referee';
 import Player from './Player';
-
+import pokerDeck from './PokerDeck';
 class GameManager {
   constructor(name1, name2, state = null) {
+    this.isStopped = false;
     this.dealerIndex = 0;
     if (state) {
       this.game = this.stateToObject(state);
@@ -45,6 +46,9 @@ class GameManager {
   }
 
   next() {
+    console.log('开始下一局');
+    pokerDeck.resetDeck();
+
     this.dealerIndex = (this.dealerIndex + 1) % 2;
     this.game.dealer = this.game.players[this.dealerIndex].id;
     this.game.currentPlayerTurn = this.game.dealer;
@@ -65,13 +69,29 @@ class GameManager {
     this.game.winner = [];
   }
 
-  step() {
-    if (this.game.winner.length > 0) {
-      this.next();
-      console.log('开始下一局');
-    } else {
-      this.referee.step();
+  async auto() {
+    while (!this.game.finalWinner && !this.isStopped) {
+      await this.step();
     }
+  }
+
+  async step() {
+    if (!this.game.finalWinner) {
+      if (this.game.winner.length > 0) {
+        if (this.game.players.some((player) => player.chips === 0)) {
+          this.game.finalWinner = this.game.winner[0];
+          console.log('游戏结束，最终赢家是：', this.game.finalWinner);
+        } else {
+          this.next();
+        }
+      } else {
+        await this.referee.step();
+      }
+    }
+  }
+
+  stop() {
+    this.isStopped = true;
   }
 }
 
