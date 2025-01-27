@@ -5,7 +5,7 @@
         <strong>{{ action.player }}:</strong> {{ action.message }}
       </div>
       <div class="action-details">
-        <span>{{ action.action }}</span> - <span>{{ action.amount }}</span>
+        <span>Action {{index + 1}}: {{ action.action }}</span> - <span>{{ action.amount }}</span>
         <span @click="toggleAnalysis(index)" class="icon-question">
             <IconQuestionCircle />
         </span>

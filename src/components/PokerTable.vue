@@ -3,7 +3,10 @@
     <div>
       <div class="d-flex">
         <div>
-          <div>player 1</div>
+          <div class="d-flex align-items-center">
+            <div class="me-1">player 1</div>
+            <div class="dealer-icon" v-if="game.dealer === game.players[0].id"></div>
+          </div>
           <div class="d-flex">
             <div>
               <div class="d-flex">
@@ -23,7 +26,10 @@
           </div>
         </div>
         <div>
-          <div>player 2</div>
+          <div class="d-flex align-items-center">
+            <div class="me-1">player 2</div>
+            <div class="dealer-icon" v-if="game.dealer === game.players[1].id"></div>
+          </div>
           <div class="d-flex">
             <div>
               <div class="d-flex">
@@ -92,5 +98,11 @@ export default {
   width: 100vw;
   height: 66vw;
   background-color: #14A076;
+}
+.dealer-icon {
+  width: 12px;
+  height: 12px;
+  background-color: #ffffff;
+  border-radius: 50%;
 }
 </style>
