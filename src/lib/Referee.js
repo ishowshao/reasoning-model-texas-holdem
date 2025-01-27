@@ -8,6 +8,8 @@ class Referee {
     this.isPaused = false;
     this.isStopped = false; // 添加一个标志位来表示游戏是否被强行停止
     pokerDeck.resetDeck();
+    this.smallBlindPlayer = this.game.players.find((player) => player.id === this.game.dealer);
+    this.bigBlindPlayer = this.game.players.find((player) => player.id !== this.game.dealer);
   }
 
   getCurrentRound() {
@@ -115,6 +117,7 @@ class Referee {
     this.game.pot += this.game.table.smallBlind + this.game.table.bigBlind;
     smallBlindPlayer.chipsThisRound += this.game.table.smallBlind;
     bigBlindPlayer.chipsThisRound += this.game.table.bigBlind;
+    this.game.currentPlayerTurn = bigBlindPlayer.id;
     console.log('Preflop has been dealt.');
   }
 
@@ -125,19 +128,20 @@ class Referee {
     this.game.players.forEach((player) => {
       player.chipsThisRound = 0;
     });
+    this.game.currentPlayerTurn = this.bigBlindPlayer.id;
     console.log('Flop has been dealt.');
   }
 
   dealTurn() {
     this.game.communityCards.turn = pokerDeck.dealCards(1)[0];
+    this.game.currentPlayerTurn = this.bigBlindPlayer.id;
     console.log('Turn has been dealt.');
-    this.game.currentPlayerTurn = this.getNextPlayer();
   }
 
   dealRiver() {
     this.game.communityCards.river = pokerDeck.dealCards(1)[0];
+    this.game.currentPlayerTurn = this.bigBlindPlayer.id;
     console.log('River has been dealt.');
-    this.game.currentPlayerTurn = this.getNextPlayer();
   }
 
   showdown() {
