@@ -8,8 +8,18 @@ class Referee {
     this.isPaused = false;
     this.isStopped = false; // 添加一个标志位来表示游戏是否被强行停止
     pokerDeck.resetDeck();
-    this.smallBlindPlayer = this.game.players.find((player) => player.id === this.game.dealer);
-    this.bigBlindPlayer = this.game.players.find((player) => player.id !== this.game.dealer);
+  }
+
+  getDealerPlayer() {
+    return this.game.players.find((player) => player.id === this.game.dealer);
+  }
+
+  getSmallBlindPlayer() {
+    return this.game.players.find((player) => player.id === this.game.dealer);
+  }
+
+  getBigBlindPlayer() {
+    return this.game.players.find((player) => player.id !== this.game.dealer);
   }
 
   getCurrentRound() {
@@ -83,6 +93,7 @@ class Referee {
       player.chipsThisRound = 0;
     });
 
+    this.game.currentRound = nextRound;
     switch (nextRound) {
       case 'PRE_FLOP':
         this.dealPreflop();
@@ -127,26 +138,28 @@ class Referee {
 
   dealFlop() {
     this.game.communityCards.flop = pokerDeck.dealCards(3);
-    this.game.currentPlayerTurn = this.bigBlindPlayer.id;
+    this.game.currentPlayerTurn = this.getBigBlindPlayer().id;
     console.log('Flop has been dealt.');
   }
 
   dealTurn() {
     this.game.communityCards.turn = pokerDeck.dealCards(1)[0];
-    this.game.currentPlayerTurn = this.bigBlindPlayer.id;
+    this.game.currentPlayerTurn = this.getBigBlindPlayer().id;
     console.log('Turn has been dealt.');
   }
 
   dealRiver() {
     this.game.communityCards.river = pokerDeck.dealCards(1)[0];
-    this.game.currentPlayerTurn = this.bigBlindPlayer.id;
+    this.game.currentPlayerTurn = this.getBigBlindPlayer().id;
     console.log('River has been dealt.');
   }
 
   showdown() {
+    // debugger;
     const activePlayers = this.getActivePlayers();
     if (activePlayers.length === 1) {
       const winner = activePlayers[0].id;
+      winner.chips += this.game.pot;
       this.game.pot = 0;
       console.log(`Player ${winner} wins the pot by default.`);
     } else {
@@ -154,12 +167,21 @@ class Referee {
       const winners = this.determineWinner(activePlayers, community);
       const pot = this.game.pot;
       const splitPot = Math.floor(pot / winners.length);
-      winners.forEach((winnerId) => {
-        const player = this.game.players.find((p) => p.id === winnerId);
-        if (player) {
-          player.chips += splitPot;
+      if (winners.length === 1) {
+        winners[0].chips += pot;
+      } else {
+        this.game.players.forEach((player) => {
+          if (winners.includes(player.id)) {
+            player.chips += splitPot;
+          }
+        });
+        if (pot % 2 === 1) {
+          // pot是奇数，无法平分给两个玩家，剩余的一个筹码分给dealer
+          const dealer = this.getDealerPlayer();
+          dealer.chips += 1;
         }
-      });
+      }
+      
       this.game.pot = 0;
       console.log(`Players ${winners.join(', ')} win the pot.`);
     }
