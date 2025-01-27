@@ -36,7 +36,7 @@ class Referee {
    */
   isBettingRoundComplete() {
     // 检查所有玩家是否都没有发牌
-    if (this.game.players.every((player) => player.holeCards[0] === -1 && player.holeCards[1] === -1)) {
+    if (this.game.players.every((player) => player.hasNoHoleCards())) {
       return true;
     }
 
@@ -89,8 +89,7 @@ class Referee {
     }
 
     this.game.players.forEach((player) => {
-      player.hasActionThisRound = false;
-      player.chipsThisRound = 0;
+      player.nextRound();
     });
 
     this.game.currentRound = nextRound;
@@ -124,14 +123,13 @@ class Referee {
       player.holeCards = pokerDeck.dealCards(2);
     });
     // 根据dealer下盲注，单挑时dealer是小盲
-    const dealerPlayer = this.game.players.find((player) => player.id === this.game.dealer);
-    const smallBlindPlayer = dealerPlayer;
-    const bigBlindPlayer = this.game.players.find((player) => player.id !== dealerPlayer.id);
-    smallBlindPlayer.chips -= this.game.table.smallBlind;
-    bigBlindPlayer.chips -= this.game.table.bigBlind;
-    this.game.pot += this.game.table.smallBlind + this.game.table.bigBlind;
-    smallBlindPlayer.chipsThisRound += this.game.table.smallBlind;
-    bigBlindPlayer.chipsThisRound += this.game.table.bigBlind;
+    const smallBlindPlayer = this.getSmallBlindPlayer();
+    const bigBlindPlayer = this.getBigBlindPlayer();
+
+    const chip1 = smallBlindPlayer.bet(this.game.table.smallBlind);
+    const chip2 = bigBlindPlayer.bet(this.game.table.bigBlind);
+    this.game.pot += chip1 + chip2;
+
     this.game.currentPlayerTurn = smallBlindPlayer.id;
     console.log('Preflop has been dealt.');
   }
@@ -222,6 +220,14 @@ class Referee {
       console.log('Player not found. Waiting for player action...');
       return;
     }
+    if (player.status === 'ALL_IN') {
+      this.game.actions.push({
+        action: 'ALL_IN',
+        amount: 0,
+        message: '已经ALL_IN，等待其他玩家操作',
+      });
+      return;
+    }
     const opponent = this.game.players.find((p) => p.id !== currentPlayerId);
 
     const action = await callModel(this.game);
@@ -230,36 +236,16 @@ class Referee {
     player.hasActionThisRound = true;
     console.log(`Player ${currentPlayerId} performs action: ${action.action} ${action.amount} ${action.message}`);
     if (action.action === 'FOLD') {
-      player.status = 'FOLDED';
+      player.fold();
     } else if (action.action === 'CALL') {
-      const needChips = opponent.chipsThisRound - player.chipsThisRound;
-      if (player.chips <= needChips) {
-        player.status = 'ALL_IN';
-        player.chipsThisRound += player.chips;
-        this.game.pot += player.chips;
-        player.chips = 0;
-      } else {
-        player.chips -= needChips;
-        player.chipsThisRound = opponent.chipsThisRound;
-        this.game.pot += needChips;
-      }
+      const chips = player.call(opponent.chipsThisRound);
+      this.game.pot += chips;
     } else if (action.action === 'ALL_IN') {
-      player.status = 'ALL_IN';
-      player.chipsThisRound += player.chips;
-      this.game.pot += player.chips;
-      player.chips = 0;
+      const chips = player.allIn();
+      this.game.pot += chips;
     } else if (action.action === 'RAISE' || action.action === 'BET') {
-      const chips = player.chips - action.amount;
-      if (chips <= 0) {
-        player.status = 'ALL_IN';
-        player.chipsThisRound += player.chips;
-        this.game.pot += player.chips;
-        player.chips = 0;
-      } else {
-        player.chipsThisRound += action.amount;
-        player.chips -= action.amount;
-        this.game.pot += action.amount;
-      }
+      const chips = player.bet(action.amount);
+      this.game.pot += chips;
     } else if (action.action === 'CHECK') {
       // 检查能不能check
       if (player.chipsThisRound < opponent.chipsThisRound) {

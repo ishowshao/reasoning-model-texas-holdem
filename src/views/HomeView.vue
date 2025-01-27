@@ -47,7 +47,7 @@ export default {
     Actions,
   },
   data() {
-    const gameManager = new GameManager('令狐冲', '东方不败', {"id":"e158fa71-6d11-40b9-8678-5b70c84babd1","table":{"players":2,"smallBlind":1,"bigBlind":2},"players":[{"id":"player1","name":"令狐冲","chips":397,"chipsThisRound":2,"hasActionThisRound":false,"status":"ACTIVE","holeCards":[28,11]},{"id":"player2","name":"东方不败","chips":0,"chipsThisRound":1,"hasActionThisRound":false,"status":"ACTIVE","holeCards":[42,49]}],"dealer":"player2","communityCards":{"flop":[-1,-1,-1],"turn":-1,"river":-1},"pot":3,"currentRound":"PRE_FLOP","currentPlayerTurn":"player2","actions":[],"winner":[],"finalWinner":null});
+    const gameManager = new GameManager('令狐冲', '东方不败');
     return {
       gameManager,
       gameRunning: false,
