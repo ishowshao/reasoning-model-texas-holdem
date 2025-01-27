@@ -28,11 +28,13 @@
     </div>
 
     <PokerTable :game="gameManager.game" />
-    <div v-if="gameManager.game.winner.length > 0">
-      <div>本轮获胜: {{ gameManager.game.winner.map(winner => gameManager.game.players.find(player => player.id === winner).name).join(', ') }}</div>
-    </div>
-    <div v-if="gameManager.game.finalWinner">
-      <div>最终获胜: {{ gameManager.game.players.find(player => player.id === gameManager.game.finalWinner).name }}</div>
+    <div class="container">
+      <div v-if="gameManager.game.winner.length > 0">
+        <div>本轮获胜: {{ gameManager.game.winner.map(winner => gameManager.game.players.find(player => player.id === winner).name).join(', ') }}</div>
+      </div>
+      <div v-if="gameManager.game.finalWinner">
+        <div>最终获胜: {{ gameManager.game.players.find(player => player.id === gameManager.game.finalWinner).name }}</div>
+      </div>
     </div>
     <Actions :actions="gameManager.game.actions" />
   </div>
