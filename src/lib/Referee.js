@@ -73,7 +73,12 @@ class Referee {
     };
 
     const nextRound = nextRoundMap[currentRound] || 'END';
-    this.game.currentRound = nextRound;
+    // 如果有一个玩家FOLDED，则游戏结束
+    if (this.game.players.some((player) => player.status === 'FOLDED')) {
+      this.game.currentRound = 'SHOWDOWN';
+    } else {
+      this.game.currentRound = nextRound;
+    }
 
     this.game.players.forEach((player) => {
       player.hasActionThisRound = false;
@@ -263,6 +268,8 @@ class Referee {
   }
 
   async step() {
+    console.log('step');
+    console.log(JSON.stringify(this.game));
     if (this.getCurrentRound() === 'END' || this.isStopped) {
       console.log('Game has ended or stopped.');
       return;
