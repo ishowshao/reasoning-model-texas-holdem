@@ -77,6 +77,7 @@ class Referee {
 
     this.game.players.forEach((player) => {
       player.hasActionThisRound = false;
+      player.chipsThisRound = 0;
     });
 
     switch (nextRound) {
@@ -123,11 +124,6 @@ class Referee {
 
   dealFlop() {
     this.game.communityCards.flop = pokerDeck.dealCards(3);
-    this.game.currentPlayerTurn = this.getNextPlayer();
-    // chipsThisRound 清零
-    this.game.players.forEach((player) => {
-      player.chipsThisRound = 0;
-    });
     this.game.currentPlayerTurn = this.bigBlindPlayer.id;
     console.log('Flop has been dealt.');
   }
