@@ -39,28 +39,26 @@ class Referee {
       return true;
     }
 
-    const activePlayers = this.getActivePlayers();
-
     // 1. 如果一个玩家状态是FOLDED，不需要继续投注
     if (this.game.players.some((player) => player.status === 'FOLDED')) {
       return true;
     }
     // 2. 两个玩家状态都是ALL_IN
-    if (activePlayers.every((player) => player.status === 'ALL_IN')) {
+    if (this.game.players.every((player) => player.status === 'ALL_IN')) {
       return true;
     }
     // 3. 如果一个玩家状态是ALL_IN，另一个玩家本轮下注>=ALL_IN玩家本轮下注
-    const allInPlayer = activePlayers.find((player) => player.status === 'ALL_IN');
+    const allInPlayer = this.game.players.find((player) => player.status === 'ALL_IN');
     if (allInPlayer) {
-      const otherPlayer = activePlayers.find((player) => player !== allInPlayer);
+      const otherPlayer = this.game.players.find((player) => player !== allInPlayer);
       if (otherPlayer.chipsThisRound >= allInPlayer.chipsThisRound) {
         return true;
       }
     }
 
     // 4. 两个玩家本轮都有行动，且下注相等
-    if (activePlayers.every((player) => player.hasActionThisRound)) {
-      const equalBets = activePlayers.every((player) => player.chipsThisRound === activePlayers[0].chipsThisRound);
+    if (this.game.players.every((player) => player.hasActionThisRound)) {
+      const equalBets = this.game.players.every((player) => player.chipsThisRound === this.game.players[0].chipsThisRound);
       if (equalBets) {
         return true;
       }
@@ -153,16 +151,15 @@ class Referee {
 
   showdown() {
     // debugger;
-    const activePlayers = this.getActivePlayers();
-    if (activePlayers.length === 1) {
-      const winner = activePlayers[0];
+    if (this.game.players.some((player) => player.status === 'FOLDED')) {
+      const winner = this.game.players.find((player) => player.status !== 'FOLDED');
       winner.chips += this.game.pot;
       this.game.pot = 0;
       this.game.winner = [winner.id];
       console.log(`Player ${winner.id} wins the pot by default.`);
     } else {
       const community = [...this.game.communityCards.flop, this.game.communityCards.turn, this.game.communityCards.river].filter((card) => card !== -1);
-      const winners = this.determineWinner(activePlayers, community);
+      const winners = this.determineWinner(this.game.players, community);
       const pot = this.game.pot;
       const splitPot = Math.floor(pot / winners.length);
       if (winners.length === 1) {
@@ -186,20 +183,20 @@ class Referee {
     }
   }
 
-  determineWinner(activePlayers, community) {
-    const p1 = new Classifier([...activePlayers[0].holeCards, ...community]);
-    const p2 = new Classifier([...activePlayers[1].holeCards, ...community]);
+  determineWinner(players, community) {
+    const p1 = new Classifier([...players[0].holeCards, ...community]);
+    const p2 = new Classifier([...players[1].holeCards, ...community]);
     console.log(p1, p2);
     const v1 = p1.classify();
     const v2 = p2.classify();
     console.log(v1, v2);
     const compareResult = compare(v1, v2);
     if (compareResult > 0) {
-      return [activePlayers[0].id];
+      return [players[0].id];
     } else if (compareResult < 0) {
-      return [activePlayers[1].id];
+      return [players[1].id];
     } else {
-      return [activePlayers[0].id, activePlayers[1].id];
+      return [players[0].id, players[1].id];
     }
   }
 
@@ -211,20 +208,23 @@ class Referee {
   }
 
   async waitForPlayerAction() {
-    console.log('Waiting for player action...');
+    debugger;
+    console.log('等待玩家操作');
     const currentPlayerId = this.game.currentPlayerTurn;
-    console.log('Current player:', currentPlayerId);
+    console.log('当前玩家:', currentPlayerId, this.game.players.find((p) => p.id === currentPlayerId).name);
     const player = this.game.players.find((p) => p.id === currentPlayerId);
     if (!player) {
-      console.log('Player not found. Waiting for player action...');
+      console.log('玩家未找到. 等待玩家操作...');
       return;
     }
     if (player.status === 'ALL_IN') {
       this.game.actions.push({
+        player: currentPlayerId,
         action: 'ALL_IN',
         amount: 0,
         message: '已经ALL_IN，等待其他玩家操作',
       });
+      this.game.currentPlayerTurn = this.getNextPlayer();
       return;
     }
     const opponent = this.game.players.find((p) => p.id !== currentPlayerId);
@@ -233,7 +233,7 @@ class Referee {
     
 
     player.hasActionThisRound = true;
-    console.log(`Player ${currentPlayerId} performs action: ${action.action} ${action.amount} ${action.message}`);
+    console.log(`${action.action} ${action.amount} ${action.message}`);
     console.log(`%c${action.action}`, 'background-color: blue;');
     if (action.action === 'FOLD') {
       player.fold();
@@ -241,6 +241,7 @@ class Referee {
       const chips = player.call(opponent.chipsThisRound);
       this.game.pot += chips;
     } else if (action.action === 'ALL_IN') {
+      debugger;
       const chips = player.allIn();
       this.game.pot += chips;
     } else if (action.action === 'RAISE' || action.action === 'BET') {

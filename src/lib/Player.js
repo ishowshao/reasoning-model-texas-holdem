@@ -47,10 +47,11 @@ class Player {
   bet(amount) {
     this.hasActionThisRound = true;
     if (amount >= this.chips) {
-      this.chipsThisRound += this.chips;
+      const chips = this.chips;
+      this.chipsThisRound += chips;
       this.chips = 0;
       this.status = 'ALL_IN';
-      return this.chips;
+      return chips;
     } else {
       this.chips -= amount;
       this.chipsThisRound += amount;
