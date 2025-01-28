@@ -286,6 +286,8 @@ class Referee {
       });
     }
     // action在上边的if-else中可能会被变更，因为AI给的action可能不符合规则
+    action.round = this.getCurrentRound();
+    action.player = player.id;
     this.game.actions.push(action);
     this.game.currentPlayerTurn = this.getNextPlayer();
   }

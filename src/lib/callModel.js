@@ -1,21 +1,13 @@
 import axios from 'axios';
-import describeActions from './describeActions';
-import util from './util';
+import describeGame from './describeGame';
 
 async function callModel(game) {
-  const payload = JSON.parse(JSON.stringify(game));
-  payload.actions = describeActions(payload.actions);
-  payload.communityCards.flop = util.air(payload.communityCards.flop);
-  payload.communityCards.turn = util.ir(payload.communityCards.turn);
-  payload.communityCards.river = util.ir(payload.communityCards.river);
-  payload.players.forEach((player) => {
-    player.holeCards = util.air(player.holeCards);
-    if (player.id !== payload.currentPlayerTurn) {
-      player.holeCards = [];
-    }
-  });
+  const payload = describeGame(game);
 
-  const { data } = await axios.post('/api/action.php', payload);
+  // form encode
+  const formData = new FormData();
+  formData.append('input', payload);
+  const { data } = await axios.post('/api/action.php', formData);
   if (data.code !== 0) {
     throw new Error(data.message);
   }

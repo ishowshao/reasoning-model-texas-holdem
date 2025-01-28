@@ -2,7 +2,7 @@
   <div class="container my-3 action-list">
     <div v-for="(action, index) in actions" :key="index" class="action-item">
       <div class="action-message">
-        <strong>{{ action.player }}:</strong> {{ action.message }}
+        <strong>{{ game.players.find((player) => player.id === action.player).name }}:</strong> {{ action.message }}
       </div>
       <div class="action-details">
         <span>Action {{index + 1}}: {{ action.action }}</span> - <span>{{ action.amount }}</span>
@@ -25,14 +25,19 @@ export default {
     IconQuestionCircle,
   },
   props: {
-    actions: {
-      type: Array,
+    game: {
+      type: Object,
       required: true,
+    },
+  },
+  computed: {
+    actions() {
+      return this.game.actions;
     },
   },
   data() {
     return {
-      showAnalysis: this.actions.map(() => false),
+      showAnalysis: this.game.actions.map(() => false),
     };
   },
   methods: {
