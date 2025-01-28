@@ -24,11 +24,10 @@ function describeActions(actions) {
         description += `执行了未知操作`;
     }
 
-    if (action.message) {
+    if (action.message && actions.indexOf(action) === actions.length - 1) {
       description += ` 并且说: ${action.message}`;
     }
 
-    description += '。'; // Add a period at the end of each sentence
     return description;
   });
 
