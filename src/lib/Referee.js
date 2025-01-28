@@ -257,13 +257,18 @@ class Referee {
         action.action = 'ALL_IN';
         chips = player.allIn();
       } else {
-        chips = player.bet(action.amount);
         if (!opponent.hasActionThisRound) {
+          chips = player.bet(action.amount);
           action.action = 'BET';
         } else {
+          chips = player.bet(action.amount);
           if (player.chipsThisRound > opponent.chipsThisRound) {
             action.action = 'RAISE';
+          } else if (player.chipsThisRound === opponent.chipsThisRound) {
+            action.action = 'CALL';
           } else {
+            // AI给的amount可能不准，此时下注小于对手，按照AI的意图，应该补充为CALL逻辑
+            chips = player.call(opponent.chipsThisRound);
             action.action = 'CALL';
           }
         }
