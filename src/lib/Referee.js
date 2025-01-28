@@ -208,7 +208,7 @@ class Referee {
   }
 
   async waitForPlayerAction() {
-    debugger;
+    // debugger;
     console.log('等待玩家操作');
     const currentPlayerId = this.game.currentPlayerTurn;
     console.log('当前玩家:', currentPlayerId, this.game.players.find((p) => p.id === currentPlayerId).name);
@@ -244,9 +244,6 @@ class Referee {
       debugger;
       const chips = player.allIn();
       this.game.pot += chips;
-    } else if (action.action === 'RAISE' || action.action === 'BET') {
-      const chips = player.bet(action.amount);
-      this.game.pot += chips;
     } else if (action.action === 'CHECK') {
       // 检查能不能check
       if (player.chipsThisRound < opponent.chipsThisRound) {
@@ -254,7 +251,25 @@ class Referee {
         action.message = '在无法CHECK的情况下CHECK，被判为FOLD';
         player.status = 'FOLDED';
       }
-    }
+    } else { // RAISE 和 BET
+      let chips = action.amount;
+      if (action.amount >= player.chips) {
+        action.action = 'ALL_IN';
+        chips = player.allIn();
+      } else {
+        chips = player.bet(action.amount);
+        if (!opponent.hasActionThisRound) {
+          action.action = 'BET';
+        } else {
+          if (player.chipsThisRound > opponent.chipsThisRound) {
+            action.action = 'RAISE';
+          } else {
+            action.action = 'CALL';
+          }
+        }
+      }
+      this.game.pot += chips;
+    } 
     // action在上边的if-else中可能会被变更，因为AI给的action可能不符合规则
     this.game.actions.push(action);
     this.game.currentPlayerTurn = this.getNextPlayer();
