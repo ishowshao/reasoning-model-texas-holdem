@@ -80,7 +80,7 @@ class Referee {
     };
 
     let nextRound = nextRoundMap[currentRound] || 'END';
-    // 如果有一个玩家FOLDED，则游戏结束
+    // 如果有一个玩家FOLDED，直接推进到SHOWDOWN
     if (this.game.players.some((player) => player.status === 'FOLDED')) {
       nextRound = 'SHOWDOWN';
     }
