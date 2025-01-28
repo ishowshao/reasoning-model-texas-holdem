@@ -268,7 +268,7 @@ class Referee {
             action.action = 'CALL';
           } else {
             // AI给的amount可能不准，此时下注小于对手，按照AI的意图，应该补充为CALL逻辑
-            chips = player.call(opponent.chipsThisRound);
+            chips += player.call(opponent.chipsThisRound);
             action.action = 'CALL';
           }
         }
