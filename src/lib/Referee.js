@@ -128,25 +128,25 @@ class Referee {
     this.game.pot += chip1 + chip2;
 
     this.game.currentPlayerTurn = smallBlindPlayer.id;
-    console.log('Preflop has been dealt.');
+    console.log('翻牌前');
   }
 
   dealFlop() {
     this.game.communityCards.flop = pokerDeck.dealCards(3);
     this.game.currentPlayerTurn = this.getBigBlindPlayer().id;
-    console.log('Flop has been dealt.');
+    console.log('翻牌已发');
   }
 
   dealTurn() {
     this.game.communityCards.turn = pokerDeck.dealCards(1)[0];
     this.game.currentPlayerTurn = this.getBigBlindPlayer().id;
-    console.log('Turn has been dealt.');
+    console.log('转牌已发');
   }
 
   dealRiver() {
     this.game.communityCards.river = pokerDeck.dealCards(1)[0];
     this.game.currentPlayerTurn = this.getBigBlindPlayer().id;
-    console.log('River has been dealt.');
+    console.log('河牌已发');
   }
 
   showdown() {
@@ -234,7 +234,7 @@ class Referee {
 
     player.hasActionThisRound = true;
     console.log(`${action.action} ${action.amount} ${action.message}`);
-    console.log(`%c${action.action}`, 'background-color: blue;');
+    console.log(`%c${action.action}`, 'color: white; background-color: lightblue; padding: 1px 2px; border-radius: 2px;');
     if (action.action === 'FOLD') {
       player.fold();
     } else if (action.action === 'CALL') {
