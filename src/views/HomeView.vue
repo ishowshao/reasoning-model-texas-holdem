@@ -16,6 +16,12 @@
             <option value="player2">DeepSeek-V3</option>
           </select>
         </div>
+        <div class="col-6">
+          <input type="text" v-model="gameManager.game.players[0].name" class="form-control" placeholder="请输入玩家1的名字">
+        </div>
+        <div class="col-6">
+          <input type="text" v-model="gameManager.game.players[1].name" class="form-control" placeholder="请输入玩家2的名字">
+        </div>
         <div class="col-12">
           <!-- <button type="submit" class="btn btn-primary me-2" @click="toggleGame">
             {{ buttonLabel }}
