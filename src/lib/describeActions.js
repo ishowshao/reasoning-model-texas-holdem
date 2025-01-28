@@ -20,12 +20,15 @@ function describeActions(actions) {
       case 'BET':
         description += `下注(${action.action}) ${action.amount}`;
         break;
+      case 'ALL_IN':
+        description += `全押(${action.action}) ${action.amount}`;
+        break;
       default:
         description += `执行了未知操作`;
     }
 
     if (action.message && actions.indexOf(action) === actions.length - 1) {
-      description += ` 并且说: ${action.message}`;
+      description += ` 并且对我说: ${action.message}`;
     }
 
     return description;

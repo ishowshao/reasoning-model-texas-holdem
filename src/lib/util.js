@@ -8,6 +8,9 @@ const SUITS = ['♠', '♥', '♣', '♦'];
  * @returns {string}
  */
 const ir = function (id) {
+    if (id < 0 || id > 51) {
+        return '';
+    }
     return SUITS[Math.floor(id / 13)] + CARDS[id % 13];
 };
 
