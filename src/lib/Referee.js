@@ -241,7 +241,7 @@ class Referee {
       const chips = player.call(opponent.chipsThisRound);
       this.game.pot += chips;
     } else if (action.action === 'ALL_IN') {
-      debugger;
+      // debugger;
       const chips = player.allIn();
       this.game.pot += chips;
     } else if (action.action === 'CHECK') {
@@ -275,30 +275,6 @@ class Referee {
     this.game.currentPlayerTurn = this.getNextPlayer();
   }
 
-  async run() {
-    while (this.getCurrentRound() !== 'END' && !this.isStopped) { // 添加对isStopped的检查
-      if (this.isPaused) {
-        console.log('Game is paused.');
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        continue;
-      }
-
-      console.log('Current round:', this.getCurrentRound());
-      if (this.getCurrentRound() === 'SHOWDOWN') {
-        this.showdown();
-        this.advanceRound();
-        continue;
-      }
-
-      if (this.isBettingRoundComplete()) {
-        console.log('Betting round complete. Advancing to next round.');
-        this.advanceRound();
-      } else {
-        await this.waitForPlayerAction();
-      }
-    }
-  }
-
   async step() {
     // debugger;
     console.log('step');
@@ -327,6 +303,7 @@ class Referee {
     if (this.isBettingRoundComplete()) {
       console.log('Betting round complete. Advancing to next round.');
       this.advanceRound();
+      await new Promise(resolve => setTimeout(resolve, 2000));
     } else {
       await this.waitForPlayerAction();
     }
