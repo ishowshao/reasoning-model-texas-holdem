@@ -274,7 +274,17 @@ class Referee {
         }
       }
       this.game.pot += chips;
-    } 
+    }
+    // 最后，如果两个人都ALL_IN，还需要考虑一下边池的情况
+    if (this.game.players.every((player) => player.status === 'ALL_IN')) {
+      // 实际的chips应该是两个人本轮下注较少的那个
+      const chips = Math.min(this.game.players[0].chipsThisRound, this.game.players[1].chipsThisRound);
+      this.game.players.forEach((player) => {
+        const delta = player.chipsThisRound - chips;
+        player.chips += delta;
+        this.game.pot -= delta;
+      });
+    }
     // action在上边的if-else中可能会被变更，因为AI给的action可能不符合规则
     this.game.actions.push(action);
     this.game.currentPlayerTurn = this.getNextPlayer();
