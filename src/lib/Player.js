@@ -1,6 +1,7 @@
 class Player {
-  constructor(id, name, chips) {
+  constructor(id, name, chips, model) {
     this.id = id;
+    this.model = model;
     this.name = name;
     this.chips = chips;
     this.chipsThisRound = 0;
@@ -11,12 +12,17 @@ class Player {
 
   load(player) {
     this.id = player.id;
+    this.model = player.model;
     this.name = player.name;
     this.chips = player.chips;
     this.chipsThisRound = player.chipsThisRound;
     this.hasActionThisRound = player.hasActionThisRound;
     this.status = player.status;
     this.holeCards = player.holeCards;
+  }
+
+  setModel(model) {
+    this.model = model;
   }
 
   /**

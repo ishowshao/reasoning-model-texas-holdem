@@ -7,6 +7,7 @@ async function callModel(game) {
   // form encode
   const formData = new FormData();
   formData.append('input', payload);
+  formData.append('model', game.players.find((player) => player.id === game.currentPlayerTurn).model);
   const { data } = await axios.post('/api/action.php', formData);
   if (data.code !== 0) {
     throw new Error(data.message);

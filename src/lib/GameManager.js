@@ -16,7 +16,7 @@ class GameManager {
           smallBlind: 1,
           bigBlind: 2,
         },
-        players: [new Player('player1', name1, 200), new Player('player2', name2, 200)],
+        players: [new Player('player1', name1, 200, 'doubao-1.5-lite'), new Player('player2', name2, 200, 'moonshot-v1-8k')],
         dealer: 'player1',
         communityCards: {
           flop: [-1, -1, -1],
@@ -43,6 +43,10 @@ class GameManager {
       state.players[i] = player;
     }
     return state;
+  }
+
+  setModel(playerIndex, model) {
+    this.game.players[playerIndex].setModel(model);
   }
 
   next() {

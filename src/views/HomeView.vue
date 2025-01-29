@@ -4,16 +4,16 @@
       <form class="row g-3">
         <div class="col-6">
           <label for="player1" class="form-label">Player 1</label>
-          <select class="form-select" id="player1">
-            <option value="player1">moonshot-v1-8k</option>
-            <option value="player2">DeepSeek-V3</option>
+          <select class="form-select" id="player1" v-model="gameManager.game.players[0].model">
+            <option value="doubao-1.5-lite">doubao-1.5-lite</option>
+            <option value="moonshot-v1-8k">moonshot-v1-8k</option>
           </select>
         </div>
         <div class="col-6">
           <label for="player2" class="form-label">Player 2</label>
-          <select class="form-select" id="player2">
-            <option value="player1">moonshot-v1-8k</option>
-            <option value="player2">DeepSeek-V3</option>
+          <select class="form-select" id="player2" v-model="gameManager.game.players[1].model">
+            <option value="moonshot-v1-8k">moonshot-v1-8k</option>
+            <option value="doubao-1.5-lite">doubao-1.5-lite</option>
           </select>
         </div>
         <div class="col-6">
@@ -58,7 +58,7 @@ export default {
     Actions,
   },
   data() {
-    const gameManager = new GameManager('令狐冲', '东方不败');
+    const gameManager = new GameManager('豆包', 'kimi');
     return {
       gameManager,
       gameRunning: false,
