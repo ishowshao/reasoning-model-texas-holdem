@@ -210,6 +210,7 @@ class Referee {
   async waitForPlayerAction() {
     // debugger;
     console.log('等待玩家操作');
+    this.game.waitingForPlayerAction = true;
     const currentPlayerId = this.game.currentPlayerTurn;
     console.log('当前玩家:', currentPlayerId, this.game.players.find((p) => p.id === currentPlayerId).name);
     const player = this.game.players.find((p) => p.id === currentPlayerId);
@@ -290,6 +291,7 @@ class Referee {
     action.player = player.id;
     this.game.actions.push(action);
     this.game.currentPlayerTurn = this.getNextPlayer();
+    this.game.waitingForPlayerAction = false;
   }
 
   async step() {

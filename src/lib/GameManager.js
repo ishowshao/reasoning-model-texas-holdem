@@ -16,6 +16,7 @@ class GameManager {
           smallBlind: 1,
           bigBlind: 2,
         },
+        waitingForPlayerAction: false,
         players: [new Player('player1', name1, 200, 'doubao-1.5-lite'), new Player('player2', name2, 200, 'moonshot-v1-8k')],
         dealer: 'player1',
         communityCards: {

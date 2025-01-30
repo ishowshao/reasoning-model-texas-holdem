@@ -14,6 +14,9 @@
         </div>
       </div>
     </div>
+    <div v-if="game.waitingForPlayerAction" class="action-message">
+      <strong>{{ game.players.find((player) => player.id === game.currentPlayerTurn).name }}:</strong> 正在思考...
+    </div>
   </div>
 </template>
 
