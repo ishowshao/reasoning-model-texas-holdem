@@ -9,7 +9,7 @@
         <span @click="toggleAnalysis(index)" class="icon-question">
             <IconQuestionCircle />
         </span>
-        <div v-if="showAnalysis[index]" class="action-analysis">
+        <div v-if="action.showAnalysis" class="action-analysis">
           {{ action.analysis }}
         </div>
       </div>
@@ -38,14 +38,9 @@ export default {
       return this.game.actions;
     },
   },
-  data() {
-    return {
-      showAnalysis: this.game.actions.map(() => false),
-    };
-  },
   methods: {
     toggleAnalysis(index) {
-      this.showAnalysis[index] = !this.showAnalysis[index];
+      this.actions[index].showAnalysis = !this.actions[index].showAnalysis;
     },
   },
 };

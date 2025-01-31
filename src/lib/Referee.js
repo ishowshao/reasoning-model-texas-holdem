@@ -289,6 +289,7 @@ class Referee {
     // action在上边的if-else中可能会被变更，因为AI给的action可能不符合规则
     action.round = this.getCurrentRound();
     action.player = player.id;
+    action.showAnalysis = false; // 默认不显示分析
     this.game.actions.push(action);
     this.game.currentPlayerTurn = this.getNextPlayer();
     this.game.waitingForPlayerAction = false;
