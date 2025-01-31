@@ -254,10 +254,12 @@ class Referee {
       player.fold();
     } else if (action.action === 'CALL') {
       const chips = player.call(opponent.chipsThisRound);
+      action.amount = chips;
       this.game.pot += chips;
     } else if (action.action === 'ALL_IN') {
       // debugger;
       const chips = player.allIn();
+      action.amount = chips;
       this.game.pot += chips;
     } else if (action.action === 'CHECK') {
       // 检查能不能check
@@ -288,6 +290,7 @@ class Referee {
           }
         }
       }
+      action.amount = chips;
       this.game.pot += chips;
     }
     // 最后，如果两个人都ALL_IN，还需要考虑一下边池的情况
