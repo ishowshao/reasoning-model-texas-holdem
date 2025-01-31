@@ -87,8 +87,8 @@ class GameManager {
           this.game.finalWinner = this.game.winner[0];
           console.log('游戏结束，最终赢家是：', this.game.finalWinner);
         } else {
-          await new Promise((resolve) => setTimeout(resolve, 5000));
           this.next();
+          await new Promise((resolve) => setTimeout(resolve, 2000));
         }
       } else {
         await this.referee.step();

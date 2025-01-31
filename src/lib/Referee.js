@@ -123,8 +123,22 @@ class Referee {
     const smallBlindPlayer = this.getSmallBlindPlayer();
     const bigBlindPlayer = this.getBigBlindPlayer();
 
-    const chip1 = smallBlindPlayer.bet(this.game.table.smallBlind);
-    const chip2 = bigBlindPlayer.bet(this.game.table.bigBlind);
+    const chip1 = smallBlindPlayer.postSmallBlind();
+    this.game.actions.push({
+      player: smallBlindPlayer.id,
+      round: 'PRE_FLOP',
+      action: 'POST_SMALL_BLIND',
+      amount: chip1,
+      message: '下小盲注',
+    });
+    const chip2 = bigBlindPlayer.postBigBlind();
+    this.game.actions.push({
+      player: bigBlindPlayer.id,
+      round: 'PRE_FLOP',
+      action: 'POST_BIG_BLIND',
+      amount: chip2,
+      message: '下大盲注',
+    });
     this.game.pot += chip1 + chip2;
 
     this.game.currentPlayerTurn = smallBlindPlayer.id;
