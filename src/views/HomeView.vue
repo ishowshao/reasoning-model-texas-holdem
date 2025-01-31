@@ -7,6 +7,7 @@
           <select class="form-select" id="player1" v-model="gameManager.game.players[0].model">
             <option value="doubao-1.5-lite">doubao-1.5-lite</option>
             <option value="moonshot-v1-8k">moonshot-v1-8k</option>
+            <option value="qwq-32b-preview">qwq-32b-preview</option>
           </select>
         </div>
         <div class="col-6">
@@ -14,6 +15,7 @@
           <select class="form-select" id="player2" v-model="gameManager.game.players[1].model">
             <option value="moonshot-v1-8k">moonshot-v1-8k</option>
             <option value="doubao-1.5-lite">doubao-1.5-lite</option>
+            <option value="qwq-32b-preview">qwq-32b-preview</option>
           </select>
         </div>
         <div class="col-6">
