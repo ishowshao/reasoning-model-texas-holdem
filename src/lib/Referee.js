@@ -265,7 +265,7 @@ class Referee {
       // 检查能不能check
       if (player.chipsThisRound < opponent.chipsThisRound) {
         action.action = 'FOLD';
-        action.message = '在无法CHECK的情况下CHECK，被判为FOLD';
+        action.message = '在无法CHECK的情况下CHECK，被系统判定为FOLD';
         player.status = 'FOLDED';
       }
     } else { // RAISE 和 BET
