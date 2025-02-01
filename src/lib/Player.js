@@ -117,6 +117,9 @@ class Player {
     return this.holeCards[0] === -1 && this.holeCards[1] === -1;
   }
 
+  /**
+   * 进入下一轮时，需要清空本轮下注的筹码，并且标记本轮还没有任何操作
+   */
   nextRound() {
     this.chipsThisRound = 0;
     this.hasActionThisRound = false;
