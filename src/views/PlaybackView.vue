@@ -71,7 +71,7 @@ export default {
     },
     step() {
       this.gameManager = new GameManager(this.playback.log[this.index].players[0].name, this.playback.log[this.index].players[1].name, this.playback.log[this.index]);
-      console.log(this.playback.log[this.index]);
+      // console.log(this.playback.log[this.index]);
       this.index++;
     },
     auto() {
