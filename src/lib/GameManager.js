@@ -38,6 +38,9 @@ class GameManager {
     for (let i = state.communityCards.length; i < 5; i++) {
       state.communityCards.push(-1);
     }
+    for (let i = 0; i < state.actions.length; i++) {
+      state.actions[i].showAnalysis = true;
+    }
     for (let i = 0; i < state.players.length; i++) {
       let player = new Player(state.players[i].id, state.players[i].name, state.players[i].chips);
       player.load(state.players[i]);
