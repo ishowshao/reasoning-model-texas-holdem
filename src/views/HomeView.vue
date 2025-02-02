@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="container my-3">
+      <NavBar />
       <form class="row g-3">
         <div class="col-6">
           <label for="player1" class="form-label">Player 1</label>
@@ -38,8 +39,8 @@
 
     <PokerTable :game="gameManager.game" />
     <div class="container">
-      <div v-if="gameManager.game.winner.length > 0">
-        <div>本轮获胜: {{ gameManager.game.winner.map(winner => gameManager.game.players.find(player => player.id === winner).name).join(', ') }}</div>
+      <div v-if="gameManager.game.winners.length > 0">
+        <div>本轮获胜: {{ gameManager.game.winners.map(winner => gameManager.game.players.find(player => player.id === winner).name).join(', ') }}</div>
       </div>
       <div v-if="gameManager.game.finalWinner">
         <div>最终获胜: {{ gameManager.game.players.find(player => player.id === gameManager.game.finalWinner).name }}</div>
@@ -53,11 +54,13 @@
 import PokerTable from '../components/PokerTable.vue';
 import Actions from '../components/Actions.vue';
 import GameManager from '../lib/GameManager';
+import NavBar from '../components/NavBar.vue';
 import describeGame from '../lib/describeGame';
 export default {
   components: {
     PokerTable,
     Actions,
+    NavBar,
   },
   data() {
     const gameManager = new GameManager('豆包', 'kimi');

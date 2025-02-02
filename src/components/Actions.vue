@@ -2,7 +2,7 @@
   <div class="container my-3 action-list">
     <div v-for="(action, index) in actions" :key="index" class="action-item">
       <div class="action-message">
-        <strong>{{ game.players.find((player) => player.id === action.player).name }}:</strong> {{ action.message }}
+        <strong>{{ action.player }}:</strong> {{ action.message }}
       </div>
       <div class="action-details">
         <span>Action {{index + 1}}: {{ action.action }}</span> - <span>{{ action.amount }}</span>

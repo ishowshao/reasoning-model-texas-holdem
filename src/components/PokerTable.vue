@@ -45,18 +45,18 @@
         <div class="me-2">
           <div>Flop</div>
           <div class="d-flex">
-            <PokerCard :card="game.communityCards.flop[0]" />
-            <PokerCard :card="game.communityCards.flop[1]" />
-            <PokerCard :card="game.communityCards.flop[2]" />
+            <PokerCard :card="game.communityCards[0]" />
+            <PokerCard :card="game.communityCards[1]" />
+            <PokerCard :card="game.communityCards[2]" />
           </div>
         </div>
         <div class="me-2">
           <div>Turn</div>
-          <PokerCard :card="game.communityCards.turn" />
+          <PokerCard :card="game.communityCards[3]" />
         </div>
         <div>
           <div>River</div>
-          <PokerCard :card="game.communityCards.river" />
+          <PokerCard :card="game.communityCards[4]" />
         </div>
       </div>
       <div class="text-center my-2">
