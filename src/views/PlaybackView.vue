@@ -71,7 +71,7 @@ export default {
     },
     step() {
       this.gameManager = new GameManager(this.playback.log[this.index].players[0].name, this.playback.log[this.index].players[1].name, this.playback.log[this.index]);
-      // console.log(this.playback.log[this.index]);
+      console.log(this.playback.log[this.index]);
       this.index++;
     },
     auto() {
@@ -83,7 +83,7 @@ export default {
         this.interval = setInterval(() => {
           if (this.index < this.playback.log.length) {
             this.gameManager = new GameManager(this.playback.log[this.index].players[0].name, this.playback.log[this.index].players[1].name, this.playback.log[this.index]);
-            console.log(this.playback.log[this.index]);
+            // console.log(this.playback.log[this.index]);
             this.index++;
           } else {
             this.stop();
