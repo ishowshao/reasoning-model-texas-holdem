@@ -16,6 +16,7 @@
         <div class="col-12">
           <button type="button" class="btn btn-primary me-2" @click="auto" :disabled="!playbackId">{{ running ? '暂停' : '开始' }}</button>
           <button type="button" class="btn btn-danger me-2" @click="stop" :disabled="!running">停止</button>
+          <button type="button" class="btn btn-primary me-2" @click="step" :disabled="!playbackId">步进</button>
         </div>
       </form>
     </div>
@@ -70,9 +71,13 @@ export default {
       clearInterval(this.interval);
     },
     step() {
-      this.gameManager = new GameManager(this.playback.log[this.index].players[0].name, this.playback.log[this.index].players[1].name, this.playback.log[this.index]);
-      console.log(this.playback.log[this.index]);
-      this.index++;
+      if (this.index < this.playback.log.length) {
+        this.gameManager = new GameManager(this.playback.log[this.index].players[0].name, this.playback.log[this.index].players[1].name, this.playback.log[this.index]);
+        console.log(this.playback.log[this.index]);
+        this.index++;
+      } else {
+        this.stop();
+      }
     },
     auto() {
       if (this.running) {
@@ -88,7 +93,7 @@ export default {
           } else {
             this.stop();
           }
-        }, 100);
+        }, 2000);
       }
     },
     async loadPlayback() {
