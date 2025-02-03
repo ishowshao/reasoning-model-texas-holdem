@@ -16,7 +16,10 @@
         <div class="col-12">
           <button type="button" class="btn btn-primary me-2" @click="auto" :disabled="!playbackId">{{ running ? '暂停' : '开始' }}</button>
           <button type="button" class="btn btn-danger me-2" @click="stop" :disabled="!running">停止</button>
-          <button type="button" class="btn btn-primary me-2" @click="step" :disabled="!playbackId">步进</button>
+          <!-- 新的上一步按钮 -->
+          <button type="button" class="btn btn-primary me-2" @click="prevStep" :disabled="!playbackId">上一步</button>
+          <!-- 修改后的下一步按钮 -->
+          <button type="button" class="btn btn-primary me-2" @click="step" :disabled="!playbackId">下一步</button>
         </div>
       </form>
     </div>
@@ -77,6 +80,17 @@ export default {
         this.index++;
       } else {
         this.stop();
+      }
+    },
+    // 新增的上一步方法
+    prevStep() {
+      if (this.index > 0) {
+        this.index--;
+        this.gameManager = new GameManager(
+          this.playback.log[this.index].players[0].name,
+          this.playback.log[this.index].players[1].name,
+          this.playback.log[this.index]
+        );
       }
     },
     auto() {
