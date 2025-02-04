@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="container my-2">
-      <NavBar />
       <form class="row g-3">
         <div class="col-12">
           <label for="playback" class="form-label">选择回放</label>

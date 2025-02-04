@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="container my-3">
-      <NavBar />
       <form class="row g-3">
         <div class="col-6">
           <label for="player1" class="form-label">Player 1</label>
